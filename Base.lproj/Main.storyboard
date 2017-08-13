@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="2cq-mn-Ypr">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Launch Table View Controller-->
+        <scene sceneID="t6d-B1-jmp">
+            <objects>
+                <tableViewController id="2cq-mn-Ypr" customClass="LaunchTableViewController" customModule="Liftoff" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="108" sectionHeaderHeight="28" sectionFooterHeight="28" id="D14-QN-8sl">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <inset key="scrollIndicatorInsets" minX="0.0" minY="18" maxX="0.0" maxY="0.0"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="launchCell" rowHeight="110" id="0B9-Gm-Hfm" customClass="LaunchCell" customModule="Liftoff" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="110"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0B9-Gm-Hfm" id="sxh-4Y-fjX">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="109.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rocket:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lu9-eq-cCt">
+                                            <rect key="frame" x="8" y="8" width="58" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HyE-LF-jGt" userLabel="Rocket Name">
+                                            <rect key="frame" x="101" y="8" width="0.0" height="0.0"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mission:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WV7-9N-39g" userLabel="Mission:">
+                                            <rect key="frame" x="8" y="37" width="63" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HKt-75-oMe" userLabel="Mission Name">
+                                            <rect key="frame" x="101" y="37" width="0.0" height="0.0"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Launch Date:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kk4-Xj-s7F">
+                                            <rect key="frame" x="8" y="85.5" width="80.5" height="16"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TBD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fu1-YR-EbU" userLabel="Date">
+                                            <rect key="frame" x="341" y="85.5" width="26" height="16"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="HKt-75-oMe" firstAttribute="leading" secondItem="WV7-9N-39g" secondAttribute="trailing" constant="30" id="6ER-Au-8Bi"/>
+                                        <constraint firstItem="WV7-9N-39g" firstAttribute="top" secondItem="Lu9-eq-cCt" secondAttribute="bottom" constant="8" id="71c-Jm-znw"/>
+                                        <constraint firstItem="HKt-75-oMe" firstAttribute="leading" secondItem="HyE-LF-jGt" secondAttribute="leading" id="EMO-ms-Pjc"/>
+                                        <constraint firstItem="WV7-9N-39g" firstAttribute="top" secondItem="sxh-4Y-fjX" secondAttribute="topMargin" constant="29" id="FmK-eF-DMR"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Fu1-YR-EbU" secondAttribute="trailing" id="M3x-im-cKc"/>
+                                        <constraint firstItem="WV7-9N-39g" firstAttribute="top" secondItem="HKt-75-oMe" secondAttribute="top" id="Q6L-ss-DeV"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="Kk4-Xj-s7F" secondAttribute="bottom" id="QBJ-V6-bhv"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="Kk4-Xj-s7F" secondAttribute="leading" id="TS5-KS-sKs"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="Fu1-YR-EbU" secondAttribute="bottom" id="UXr-Rm-h4M"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="Lu9-eq-cCt" secondAttribute="leading" id="aOj-2j-fj3"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="WV7-9N-39g" secondAttribute="leading" id="ezb-mD-wH7"/>
+                                        <constraint firstAttribute="topMargin" secondItem="HyE-LF-jGt" secondAttribute="top" id="kMu-P3-PWq"/>
+                                        <constraint firstAttribute="topMargin" secondItem="Lu9-eq-cCt" secondAttribute="top" id="lvm-cw-a7L"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="date" destination="Fu1-YR-EbU" id="yjc-fk-VM1"/>
+                                    <outlet property="missionName" destination="HKt-75-oMe" id="4Uy-To-HdE"/>
+                                    <outlet property="rocketName" destination="HyE-LF-jGt" id="dwv-yr-6ky"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="2cq-mn-Ypr" id="mCa-rB-YFH"/>
+                            <outlet property="delegate" destination="2cq-mn-Ypr" id="hPH-4p-efN"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vun-wl-bEr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="976.79999999999995" y="138.98050974512745"/>
+        </scene>
+    </scenes>
+</document>
