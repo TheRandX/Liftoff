@@ -8,7 +8,36 @@
 
 import Foundation
 
-// TODO: Add representations for location, rocket and mission objects
+struct Agency {
+    
+    let id: Int
+    
+    let name, abbreviaton: String
+    
+    let type: Int
+    let countryCode: String
+    
+    let wikiURL: URL
+    let infoURLs: [URL]?
+    
+    // Objects
+    let typeObject: AgencyType?
+    
+}
+
+struct AgencyType {
+    
+    let id: Int
+    let name: String
+}
+
+struct EventType {
+    
+    let id: Int
+    let name: String
+
+}
+
 struct Launch {
     
     let id: Int
@@ -31,4 +60,125 @@ struct Launch {
     
     // -1 if unknown
     let probability: Int?
+    
+    // Objects
+    let launchEvent: LaunchEvent?
+    let launchStatus: LaunchStatus?
+    
+    let location: [Pad]?
+    let rocket: Rocket?
+    let missions: [Mission]?
 }
+
+struct LaunchEvent {
+    
+    let id, parentID: Int
+    
+    let name, description: String
+    let type, duration, relativeTime: Int
+}
+
+struct LaunchStatus {
+    
+    let id: Int
+    let name, description: String
+}
+
+struct Location {
+    
+    let id: Int
+    
+    let name, countycode: String
+    
+    let wikiURL: URL
+    let infoURLs: [URL]?
+}
+
+struct Mission {
+    
+    let id: Int
+    
+    let name, description: String
+    
+    let launch, type: Int
+    
+    let wikiURL: URL
+    let infoURLs: [URL]?
+    
+    // Objects
+    let agencies: [Agency]?
+    let events: [MissionEvent]?
+}
+
+struct MissionEvent {
+    
+    let id, parentID: Int
+    
+    let name, description: String
+    let type, duration, relativeTime: Int
+    
+}
+
+struct MissionType {
+    
+    let id: Int
+    let name: String
+    
+}
+
+struct Pad {
+    
+    let id: Int
+    
+    let name: String
+    
+    let padType: Int // 0 for launch, 1 for landing
+    
+    let latitude, longtitude: Location
+    let mapURL: URL
+    let locationID: Int
+    
+    let wikiURL: URL
+    let infoURLs: [URL]?
+    
+    // Objects
+    let agencies: [Agency]?
+}
+
+struct Rocket {
+    
+    let id: Int
+    
+    let name: String
+    
+    let defaultPads: [Int]
+    
+    let wikiURL: URL
+    let infoURLs: [URL]?
+    
+    let imageURL: URL?
+    let imageSizes: [Int]?
+    
+    // Objects
+    let family: RocketFamiy?
+}
+
+struct RocketEvent {
+    
+    let id, parentID: Int
+    
+    let name, description: String
+    let type, duration, relativeTime: Int
+    
+}
+
+struct RocketFamiy {
+    
+    let id: Int
+    
+    let name: String
+    
+    // Objects
+    let agencies: [Agency]?
+}
+
