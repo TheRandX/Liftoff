@@ -88,7 +88,7 @@ struct Location {
     
     let id: Int
     
-    let name, countycode: String
+    let name, countrycode: String
     
     let wikiURL: URL
     let infoURLs: [URL]?
@@ -98,16 +98,10 @@ struct Mission {
     
     let id: Int
     
-    let name, description: String
+    let name, description, typeName: String
     
-    let launch, type: Int
-    
-    let wikiURL: URL
+    let wikiURL: URL?
     let infoURLs: [URL]?
-    
-    // Objects
-    let agencies: [Agency]?
-    let events: [MissionEvent]?
 }
 
 struct MissionEvent {
@@ -151,8 +145,6 @@ struct Rocket {
     
     let name: String
     
-    let defaultPads: [Int]
-    
     let wikiURL: URL
     let infoURLs: [URL]?
     
@@ -160,7 +152,7 @@ struct Rocket {
     let imageSizes: [Int]?
     
     // Objects
-    let family: RocketFamiy?
+    let family: RocketFamily?
 }
 
 struct RocketEvent {
@@ -172,7 +164,7 @@ struct RocketEvent {
     
 }
 
-struct RocketFamiy {
+struct RocketFamily {
     
     let id: Int
     
