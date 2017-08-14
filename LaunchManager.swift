@@ -126,17 +126,6 @@ class LaunchManager {
                     var missions: [Mission]? = nil
                     var pads: [Pad]? = nil
                     
-                    // Retrieving location object
-                    /*if let locDict = launchDict[LaunchResponseParams.Location.rawValue]?.dictionaryValue {
-                     
-                     let wikiURL = URL(fileURLWithPath: (locDict[LaunchResponseParams.WikiURL.rawValue]?.stringValue)!)
-                     
-                     location = Location(id: (locDict[LaunchResponseParams.ID.rawValue]?.intValue)!,
-                     name: (locDict[LaunchResponseParams.Name.rawValue]?.stringValue)!,
-                     countrycode: (locDict[LaunchResponseParams.CountryCode.rawValue]?.stringValue)!,
-                     wikiURL: wikiURL, infoURLs: URLArrayFromDictionary(locDict, arrayName: .InfoURLs))
-                     }*/
-                    
                     if let padDict = launchDict[LaunchResponseParams.Location.rawValue]?.dictionaryValue {
                         
                         print(padDict)
@@ -186,6 +175,7 @@ class LaunchManager {
                     }
                     
                     // Create the launch object and append it to the launch array
+                    // TODO: Add pads array to object
                     launches?.append(Launch(id: (launchDict[LaunchResponseParams.ID.rawValue]?.intValue)!,
                                             rocketName: nameComponents[0],
                                             missionName: nameComponents[1],

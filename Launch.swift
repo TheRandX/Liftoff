@@ -65,7 +65,7 @@ struct Launch {
     let launchEvent: LaunchEvent?
     let launchStatus: LaunchStatus?
     
-    let location: [Pad]?
+    let location: Location?
     let rocket: Rocket?
     let missions: [Mission]?
 }
@@ -92,6 +92,9 @@ struct Location {
     
     let wikiURL: URL
     let infoURLs: [URL]?
+    
+    // Objects
+    let pads: [Pad]?
 }
 
 struct Mission {
