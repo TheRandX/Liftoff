@@ -19,4 +19,17 @@ class LaunchStore {
     func clear() {
         items.removeAll()
     }
+    
+    func sortItems() {
+        items.sort() { (launch1, launch2) in
+            
+            if launch1.windowstart.timeIntervalSince1970 > launch2.windowstart.timeIntervalSince1970 {
+                return true
+            } else {
+                return false
+            }
+            
+        }
+    }
+    
 }

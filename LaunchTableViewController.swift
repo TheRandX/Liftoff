@@ -38,6 +38,7 @@ class LaunchTableViewController: UITableViewController {
         LaunchManager.getLaunches(mode: "verbose", options: nil) { [weak self] optLaunches in
             if let launches = optLaunches {
                 self?.store.items = launches
+                self?.store.sortItems()
                 self?.tableView.reloadData()
             }
         }

@@ -51,7 +51,7 @@ struct Launch {
     let status: Int
     
     // Start and end of launch window
-    let windowstart, windowend: Date?
+    let windowstart, windowend: Date
     
     // Arrays containing URLs
     let infoURLs, vidURLs: [URL]?

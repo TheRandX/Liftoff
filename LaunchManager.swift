@@ -13,7 +13,7 @@ import SwiftyJSON
 // This class manages sending and recieving data from the launchlibrary API
 class LaunchManager {
     
-    private static let baseURL = "https://launchlibrary.net/1.2/launch"
+    private static let baseURL = "https://launchlibrary.net/1.2/launch?sort"
     
     static func getLaunches(mode: String, options: [String: String]?, completion: @escaping ([Launch]?) -> Void) {
         
@@ -21,7 +21,7 @@ class LaunchManager {
         
         // Construct the url from the options dictionary
         var url = LaunchManager.baseURL
-        url.append("?")
+        url.append("&")
         url.append("mode=\(mode)")
         if let options = options, !options.isEmpty {
             for (parameter, value) in options {
@@ -51,6 +51,8 @@ class LaunchManager {
     }
     
     
+    
+    
     // MARK: Retriever functions
     // Retrieves and completes the launch object
     private static func launchObjectFromJSON(_ dictionary: [String: JSON]) -> Launch {
@@ -63,13 +65,13 @@ class LaunchManager {
         if !(tbdDate == 1 || tbdTime == 1) {
             date = Date(timeIntervalSince1970: Double((dictionary[LaunchResponseParams.DateStamp.rawValue]?.intValue)!))
             
-            windowStart = Date(timeIntervalSince1970:
-                Double((dictionary[LaunchResponseParams.WsStamp.rawValue]?.intValue)!))
-            
-            windowEnd = Date(timeIntervalSince1970:
-                Double((dictionary[LaunchResponseParams.WeStamp.rawValue]?.intValue)!))
-            
         }
+        
+        windowStart = Date(timeIntervalSince1970:
+            Double((dictionary[LaunchResponseParams.WsStamp.rawValue]?.intValue)!))
+        
+        windowEnd = Date(timeIntervalSince1970:
+            Double((dictionary[LaunchResponseParams.WeStamp.rawValue]?.intValue)!))
         
         // Splits the rocket name and mission name, rocket name on index 0, mission name on index 1
         // ASSUMES THE SEPARATOR IS |
@@ -119,8 +121,8 @@ class LaunchManager {
                                 tbddate: tbdDate, tbdtime: tbdTime,
                                 date: date,
                                 status: (dictionary[LaunchResponseParams.Status.rawValue]?.intValue)!,
-                                windowstart: windowStart,
-                                windowend: windowEnd,
+                                windowstart: windowStart!,
+                                windowend: windowEnd!,
                                 infoURLs: URLArrayFromDictionary(dictionary, arrayName: .InfoURLs),
                                 vidURLs: URLArrayFromDictionary(dictionary, arrayName: .VidURLs),
                                 holdreason: holdreason,
