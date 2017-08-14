@@ -8,6 +8,8 @@
 
 import Foundation
 
+
+
 struct Agency {
     
     let id: Int
@@ -17,25 +19,23 @@ struct Agency {
     let type: Int
     let countryCode: String
     
-    let wikiURL: URL
+    let wikiURL: URL?
     let infoURLs: [URL]?
-    
-    // Objects
-    let typeObject: AgencyType?
-    
 }
 
-struct AgencyType {
+struct ObjectType {
     
     let id: Int
     let name: String
 }
 
-struct EventType {
+struct Event {
     
-    let id: Int
-    let name: String
-
+    let id, parentID: Int
+    
+    let name, description: String
+    let type, duration, relativeTime: Int
+    
 }
 
 struct Launch {
@@ -62,20 +62,12 @@ struct Launch {
     let probability: Int?
     
     // Objects
-    let launchEvent: LaunchEvent?
+    let launchEvent: Event?
     let launchStatus: LaunchStatus?
     
     let location: Location?
     let rocket: Rocket?
     let missions: [Mission]?
-}
-
-struct LaunchEvent {
-    
-    let id, parentID: Int
-    
-    let name, description: String
-    let type, duration, relativeTime: Int
 }
 
 struct LaunchStatus {
@@ -90,7 +82,7 @@ struct Location {
     
     let name, countrycode: String
     
-    let wikiURL: URL
+    let wikiURL: URL?
     let infoURLs: [URL]?
     
     // Objects
@@ -107,35 +99,16 @@ struct Mission {
     let infoURLs: [URL]?
 }
 
-struct MissionEvent {
-    
-    let id, parentID: Int
-    
-    let name, description: String
-    let type, duration, relativeTime: Int
-    
-}
-
-struct MissionType {
-    
-    let id: Int
-    let name: String
-    
-}
-
 struct Pad {
     
     let id: Int
     
     let name: String
     
-    let padType: Int // 0 for launch, 1 for landing
+    let latitude, longitude: Double
+    let mapURL: URL?
     
-    let latitude, longtitude: Location
-    let mapURL: URL
-    let locationID: Int
-    
-    let wikiURL: URL
+    let wikiURL: URL?
     let infoURLs: [URL]?
     
     // Objects
@@ -148,7 +121,7 @@ struct Rocket {
     
     let name: String
     
-    let wikiURL: URL
+    let wikiURL: URL?
     let infoURLs: [URL]?
     
     let imageURL: URL?
@@ -156,15 +129,6 @@ struct Rocket {
     
     // Objects
     let family: RocketFamily?
-}
-
-struct RocketEvent {
-    
-    let id, parentID: Int
-    
-    let name, description: String
-    let type, duration, relativeTime: Int
-    
 }
 
 struct RocketFamily {
