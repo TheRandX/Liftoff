@@ -45,7 +45,7 @@ struct Launch {
     
     // Date related, if tbddate or tbdtime = 1, the date value isnt accurate
     let tbddate, tbdtime: Int
-    let date: Date?
+    let date: Date
     
     // Status of the mission, 1 Green, 2 Red, 3 Success, 4 Failed
     let status: Int

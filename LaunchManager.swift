@@ -38,7 +38,7 @@ class LaunchManager {
                 let json = JSON(data)
                 // TODO: Add type request selection here
                 for launch in json["launches"].arrayValue {
-                
+                    
                     let launchDict = launch.dictionaryValue
                     
                     launches?.append(launchObjectFromJSON(launchDict))
@@ -61,11 +61,11 @@ class LaunchManager {
         let tbdDate = (dictionary[LaunchResponseParams.TbdDate.rawValue]?.intValue)!
         let tbdTime = (dictionary[LaunchResponseParams.TbdTime.rawValue]?.intValue)!
         
-        var date: Date?, windowStart: Date?, windowEnd: Date? = nil
-        if !(tbdDate == 1 || tbdTime == 1) {
-            date = Date(timeIntervalSince1970: Double((dictionary[LaunchResponseParams.DateStamp.rawValue]?.intValue)!))
-            
-        }
+        var date: Date, windowStart: Date?, windowEnd: Date? = nil
+        
+        let isoDateString = dictionary[LaunchResponseParams.StringDate.rawValue]!.stringValue
+        date = dateFromString(isoDateString)
+        
         
         windowStart = Date(timeIntervalSince1970:
             Double((dictionary[LaunchResponseParams.WsStamp.rawValue]?.intValue)!))
@@ -116,23 +116,23 @@ class LaunchManager {
         // Create the launch object and append it to the launch array
         // TODO: Add pads array to object
         return Launch(id: (dictionary[LaunchResponseParams.ID.rawValue]?.intValue)!,
-                                rocketName: nameComponents[0],
-                                missionName: nameComponents[1],
-                                tbddate: tbdDate, tbdtime: tbdTime,
-                                date: date,
-                                status: (dictionary[LaunchResponseParams.Status.rawValue]?.intValue)!,
-                                windowstart: windowStart!,
-                                windowend: windowEnd!,
-                                infoURLs: URLArrayFromDictionary(dictionary, arrayName: .InfoURLs),
-                                vidURLs: URLArrayFromDictionary(dictionary, arrayName: .VidURLs),
-                                holdreason: holdreason,
-                                failreason: failreason,
-                                probability: probability,
-                                launchEvent: nil,
-                                launchStatus: nil,
-                                location: location,
-                                rocket: rocket,
-                                missions: missions)
+                      rocketName: nameComponents[0],
+                      missionName: nameComponents[1],
+                      tbddate: tbdDate, tbdtime: tbdTime,
+                      date: date,
+                      status: (dictionary[LaunchResponseParams.Status.rawValue]?.intValue)!,
+                      windowstart: windowStart!,
+                      windowend: windowEnd!,
+                      infoURLs: URLArrayFromDictionary(dictionary, arrayName: .InfoURLs),
+                      vidURLs: URLArrayFromDictionary(dictionary, arrayName: .VidURLs),
+                      holdreason: holdreason,
+                      failreason: failreason,
+                      probability: probability,
+                      launchEvent: nil,
+                      launchStatus: nil,
+                      location: location,
+                      rocket: rocket,
+                      missions: missions)
     }
     
     // Returns an array of agency objects from JSON data
@@ -140,7 +140,7 @@ class LaunchManager {
         
         return array.map() { dict in
             let dictionary = dict.dictionaryValue
-
+            
             return Agency(id: (dictionary[LaunchResponseParams.ID.rawValue]?.intValue)!,
                           name: (dictionary[LaunchResponseParams.Name.rawValue]?.stringValue)!,
                           abbreviaton: (dictionary[LaunchResponseParams.Abbreviation.rawValue]?.stringValue)!,
@@ -179,17 +179,17 @@ class LaunchManager {
     // Retrieves a location object from JSON data
     private static func locationFromJSON(_ dictionary: [String: JSON]) -> Location {
         return Location(id: (dictionary[LaunchResponseParams.ID.rawValue]?.intValue)!,
-                            name: (dictionary[LaunchResponseParams.Name.rawValue]?.stringValue)!,
-                            countrycode: (dictionary[LaunchResponseParams.CountryCode.rawValue]?.stringValue)!,
-                            wikiURL: URLFromDictionary(dictionary, URLName: .WikiURL),
-                            infoURLs: URLArrayFromDictionary(dictionary, arrayName: .InfoURLs),
-                            pads: padsArrayFromJSON((dictionary[LaunchResponseParams.Pads.rawValue]?.arrayValue)!))
+                        name: (dictionary[LaunchResponseParams.Name.rawValue]?.stringValue)!,
+                        countrycode: (dictionary[LaunchResponseParams.CountryCode.rawValue]?.stringValue)!,
+                        wikiURL: URLFromDictionary(dictionary, URLName: .WikiURL),
+                        infoURLs: URLArrayFromDictionary(dictionary, arrayName: .InfoURLs),
+                        pads: padsArrayFromJSON((dictionary[LaunchResponseParams.Pads.rawValue]?.arrayValue)!))
     }
     
     private static func padsArrayFromJSON(_ array: [JSON]) -> [Pad]? {
         
         return array.map() { pad in
-        let padDict = pad.dictionaryValue
+            let padDict = pad.dictionaryValue
             
             return Pad(id: (padDict[LaunchResponseParams.ID.rawValue]?.intValue)!,
                        name: (padDict[LaunchResponseParams.Name.rawValue]?.stringValue)!,
@@ -257,6 +257,18 @@ class LaunchManager {
             return URL(fileURLWithPath: url)
         }
         
+    }
+    
+    // Decodes iso date in format yyyymmddThh24missZ and returns a Date object
+    private static func dateFromString(_ dateString: String) -> Date {
+        
+        let dateFormatter: DateFormatter = {
+            let df = DateFormatter()
+            df.dateFormat = "yyyyMMdd'T'HHmmss'Z'"
+            return df
+        }()
+        
+        return dateFormatter.date(from: dateString)!
     }
     
 }

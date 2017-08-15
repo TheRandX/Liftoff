@@ -25,9 +25,13 @@ enum LaunchResponseParams: String {
     case TbdDate = "tbddate"
     case TbdTime = "tbdtime"
     case Status = "status"
+    
     case WsStamp = "wsstamp"
     case WeStamp = "westamp"
     case DateStamp = "netstamp"
+    
+    case StringDate = "isonet"
+    
     case Duration = "duration"
     case RelativeTime = "relativeTime"
     

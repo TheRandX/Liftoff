@@ -16,8 +16,7 @@ class LaunchTableViewController: UITableViewController {
     static let launchManager = LaunchManager()
     let dateFormatter = { () -> DateFormatter in
         let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = .medium
-        dateFormatter.dateStyle = .medium
+        dateFormatter.dateFormat = "MMM d, yyyy, HH:mm:ss"
         return dateFormatter
     }()
     
@@ -60,18 +59,17 @@ class LaunchTableViewController: UITableViewController {
         // Retrieve the item from the item store
         let item = store.items[indexPath.row]
         
-        // Set the date, if date is nil, set it to N/A
-        if let date = item.date {
-            cell.date.text = dateFormatter.string(from: date)
-        } else {
-            cell.date.text = "TBD"
-        }
+        // Set the date
+        cell.date.text = dateFormatter.string(from: item.date)
         cell.missionName.text = item.missionName
         cell.rocketName.text = item.rocketName
         
         return cell
         
-        
+    }
+    
+    // TODO: When a row is selected, activate the "launchInfo" segue to LaunchInfoViewController
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
     
