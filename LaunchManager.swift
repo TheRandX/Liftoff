@@ -235,7 +235,9 @@ class LaunchManager {
         }
         
         return Rocket(id: (dictionary[LaunchResponseParams.ID.rawValue]?.intValue)!,
-                      name: (dictionary[LaunchResponseParams.Name.rawValue]?.stringValue)!, wikiURL: URLFromDictionary(dictionary, URLName: .WikiURL), infoURLs: URLArrayFromDictionary(dictionary, arrayName: .InfoURLs),
+                      name: (dictionary[LaunchResponseParams.Name.rawValue]?.stringValue)!,
+                      wikiURL: URLFromDictionary(dictionary, URLName: .WikiURL),
+                      infoURLs: URLArrayFromDictionary(dictionary, arrayName: .InfoURLs),
                       imageURL: URLFromDictionary(dictionary, URLName: .ImageURL),
                       imageSizes: imageSizes, family: family)
     }

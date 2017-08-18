@@ -13,6 +13,7 @@ import SwiftyJSON
 class LaunchTableViewController: UITableViewController {
     
     let store = LaunchStore()
+    var selectedLaunch: Launch?
     static let launchManager = LaunchManager()
     let dateFormatter = { () -> DateFormatter in
         let dateFormatter = DateFormatter()
@@ -23,17 +24,6 @@ class LaunchTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Get the height of the status bar
-        let statusBarHeight = UIApplication.shared.statusBarFrame.height
-        
-        // Create insets so the status bar and table view dont clip
-        let insets = UIEdgeInsets(top: statusBarHeight, left: 0, bottom: 0, right: 0)
-        tableView.contentInset = insets
-        tableView.scrollIndicatorInsets = insets
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         LaunchManager.getLaunches(mode: "verbose", options: nil) { [weak self] optLaunches in
             if let launches = optLaunches {
                 self?.store.items = launches
@@ -41,6 +31,14 @@ class LaunchTableViewController: UITableViewController {
                 self?.tableView.reloadData()
             }
         }
+        
+        // Get the height of the status bar
+        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+        
+        // Create insets so the status bar and table view dont clip
+        let insets = UIEdgeInsets(top: statusBarHeight, left: 0, bottom: 0, right: 0)
+        tableView.contentInset = insets
+        tableView.scrollIndicatorInsets = insets
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -70,7 +68,35 @@ class LaunchTableViewController: UITableViewController {
     
     // TODO: When a row is selected, activate the "launchInfo" segue to LaunchInfoViewController
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        selectedLaunch = store.items[indexPath.row]
+        performSegue(withIdentifier: "launchInfo", sender: self)
+        selectedLaunch = nil
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let identifier = segue.identifier {
+            switch identifier {
+            case "launchInfo":
+                if let dvc = segue.destination.contentViewController as? LaunchInfoViewController {
+                    if let launch = selectedLaunch {
+                        dvc.launchItem = launch
+                    }
+                }
+            default:
+                break
+            }
+        }
+    }
+    
+}
+
+extension UIViewController {
+    var contentViewController: UIViewController {
+        if let nvc = self as? UINavigationController {
+            return nvc.visibleViewController ?? self
+        }
+        else {
+            return self
+        }
+    }
 }

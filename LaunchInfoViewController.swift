@@ -7,29 +7,64 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireImage
 
 class LaunchInfoViewController: UIViewController {
-
+    
+    var launchItem: Launch!
+    
+    @IBOutlet weak var rocketLabel: UILabel!
+    @IBOutlet weak var missionLabel: UILabel!
+    @IBOutlet weak var infoTextView: UITextView!
+    @IBOutlet weak var rocketImageView: UIImageView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Get article text form wiki info manager
+        WikiInfoManager.getArticleText(articleURL: (launchItem.rocket?.wikiURL)!) { [weak self] articleText in
+            
+            self?.infoTextView.text = articleText
+            
+        }
+        
+        // Get the image from the rocket object url
+        Alamofire.request(launchItem.rocket!.imageURL!).responseImage() { [weak self] response in
+            
+            debugPrint(response)
+            
+            print(response.request)
+            print(response.response)
+            debugPrint(response.result)
+            
+            if let image = response.result.value {
+                self?.rocketImageView.image = image
+            }
+            
+        }
 
+        
+        // Configure info text view
+        infoTextView.isScrollEnabled = false
+        infoTextView.isEditable = false
+        
         // Do any additional setup after loading the view.
+        launchItemSet()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    private func launchItemSet() {
+        
+        rocketLabel.text = launchItem.rocketName
+        missionLabel.text = launchItem.missionName
+        
+        view.setNeedsLayout()
     }
-    */
-
+    
 }
