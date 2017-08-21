@@ -58,20 +58,27 @@ class LaunchManager {
     private static func launchObjectFromJSON(_ dictionary: [String: JSON]) -> Launch {
         
         // Checks if date and time is known, if yes sets it
-        let tbdDate = (dictionary[LaunchResponseParams.TbdDate.rawValue]?.intValue)!
-        let tbdTime = (dictionary[LaunchResponseParams.TbdTime.rawValue]?.intValue)!
+        let tbdDate = (dictionary[LaunchResponseParams.TbdDate.rawValue]?.boolValue)!
+        let tbdTime = (dictionary[LaunchResponseParams.TbdTime.rawValue]?.boolValue)!
         
         var date: Date, windowStart: Date?, windowEnd: Date? = nil
         
         let isoDateString = dictionary[LaunchResponseParams.StringDate.rawValue]!.stringValue
         date = dateFromString(isoDateString)
         
-        
-        windowStart = Date(timeIntervalSince1970:
-            Double((dictionary[LaunchResponseParams.WsStamp.rawValue]?.intValue)!))
-        
-        windowEnd = Date(timeIntervalSince1970:
-            Double((dictionary[LaunchResponseParams.WeStamp.rawValue]?.intValue)!))
+        if tbdDate || tbdTime {
+            
+            windowStart = dateFromString(dictionary[LaunchResponseParams.WsString.rawValue]!.stringValue)
+            windowEnd = dateFromString(dictionary[LaunchResponseParams.WeString.rawValue]!.stringValue)
+            
+        } else {
+            
+            windowStart = Date(timeIntervalSince1970:
+                Double((dictionary[LaunchResponseParams.WsStamp.rawValue]?.intValue)!))
+            
+            windowEnd = Date(timeIntervalSince1970:
+                Double((dictionary[LaunchResponseParams.WeStamp.rawValue]?.intValue)!))
+        }
         
         // Splits the rocket name and mission name, rocket name on index 0, mission name on index 1
         // ASSUMES THE SEPARATOR IS |
@@ -246,7 +253,7 @@ class LaunchManager {
     // Returns optional URL from a JSON dictionary
     private static func URLFromDictionary(_ dictionary: [String: JSON], URLName: LaunchResponseParams) -> URL? {
         if let stringURL = dictionary[URLName.rawValue]?.stringValue {
-            return URL(fileURLWithPath: stringURL)
+            return URL(string: stringURL)
         } else {
             return nil
         }
@@ -256,7 +263,7 @@ class LaunchManager {
     private static func URLArrayFromDictionary(_ dictionary: [String: JSON], arrayName: LaunchResponseParams) -> [URL]? {
         
         return (dictionary[arrayName.rawValue]?.arrayObject as? [String])?.map() { url in
-            return URL(fileURLWithPath: url)
+            return URL(string: url)!
         }
         
     }

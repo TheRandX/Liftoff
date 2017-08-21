@@ -8,17 +8,26 @@
 
 import UIKit
 import Alamofire
-import AlamofireImage
 
 class LaunchInfoViewController: UIViewController {
     
     var launchItem: Launch!
     
-    @IBOutlet weak var rocketLabel: UILabel!
-    @IBOutlet weak var missionLabel: UILabel!
-    @IBOutlet weak var infoTextView: UITextView!
-    @IBOutlet weak var rocketImageView: UIImageView!
+    let dateFormatter = { () -> DateFormatter in
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d, yyyy, HH:mm:ss"
+        return dateFormatter
+    }()
     
+    @IBOutlet weak var missionLabel: UILabel!
+    @IBOutlet weak var missionDescriptionLabel: UILabel!
+    @IBOutlet weak var missionTypeLabel: UILabel!
+    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var rocketLabel: UILabel!
+    @IBOutlet weak var rocketInfoLabel: UILabel!
+    @IBOutlet weak var windowLabel: UILabel!
+    
+    private let sentenceCap: Int = 3
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,29 +35,19 @@ class LaunchInfoViewController: UIViewController {
         // Get article text form wiki info manager
         WikiInfoManager.getArticleText(articleURL: (launchItem.rocket?.wikiURL)!) { [weak self] articleText in
             
-            self?.infoTextView.text = articleText
-            
-        }
-        
-        // Get the image from the rocket object url
-        Alamofire.request(launchItem.rocket!.imageURL!).responseImage() { [weak self] response in
-            
-            debugPrint(response)
-            
-            print(response.request)
-            print(response.response)
-            debugPrint(response.result)
-            
-            if let image = response.result.value {
-                self?.rocketImageView.image = image
+            if let text = articleText {
+                
+                var sentences = text.components(separatedBy: ". ")
+                
+                sentences.removeSubrange((self?.sentenceCap)!..<sentences.count)
+                
+                
+                self?.rocketInfoLabel.text = sentences.joined(separator: ". ").appending(".")
             }
             
         }
-
         
-        // Configure info text view
-        infoTextView.isScrollEnabled = false
-        infoTextView.isEditable = false
+        
         
         // Do any additional setup after loading the view.
         launchItemSet()
@@ -61,10 +60,28 @@ class LaunchInfoViewController: UIViewController {
     
     private func launchItemSet() {
         
-        rocketLabel.text = launchItem.rocketName
+        self.title = launchItem.rocketName
         missionLabel.text = launchItem.missionName
+        missionDescriptionLabel.text = launchItem.missions?.first?.description
+        missionTypeLabel.text = launchItem.missions?.first?.typeName
+        locationLabel.text = launchItem.location?.pads?.first?.name
+        
+        rocketLabel.text = launchItem.rocket?.name
+        
+        
+        var windowText = dateFormatter.string(from: launchItem.windowstart)
+        
+        if launchItem.windowstart != launchItem.windowend {
+            windowText.append(" - \(dateFormatter.string(from: launchItem.windowend))")
+        }
+        
+        windowLabel.text = windowText
+        
+        
+        
         
         view.setNeedsLayout()
     }
     
 }
+

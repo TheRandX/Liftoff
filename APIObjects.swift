@@ -43,8 +43,8 @@ struct Launch {
     let id: Int
     let rocketName, missionName: String
     
-    // Date related, if tbddate or tbdtime = 1, the date value isnt accurate
-    let tbddate, tbdtime: Int
+    // If true, date or time isn't 100% determined
+    let tbddate, tbdtime: Bool
     let date: Date
     
     // Status of the mission, 1 Green, 2 Red, 3 Success, 4 Failed

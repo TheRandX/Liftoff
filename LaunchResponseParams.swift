@@ -31,6 +31,8 @@ enum LaunchResponseParams: String {
     case DateStamp = "netstamp"
     
     case StringDate = "isonet"
+    case WsString = "isostart"
+    case WeString = "isoend"
     
     case Duration = "duration"
     case RelativeTime = "relativeTime"
