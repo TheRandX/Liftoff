@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="sjZ-9L-2qy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="sjZ-9L-2qy">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -32,7 +31,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="359" height="146.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mission" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yOf-Mh-QVT">
-                                                        <rect key="frame" x="145" y="20" width="69" height="0.5"/>
+                                                        <rect key="frame" x="146" y="20" width="67.5" height="0.5"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -62,7 +61,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Window Start - Window End" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWm-Gp-i3w">
-                                                        <rect key="frame" x="106.5" y="59" width="147.5" height="13.5"/>
+                                                        <rect key="frame" x="106" y="59" width="147.5" height="13.5"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -89,32 +88,37 @@
                                                 <rect key="frame" x="0.0" y="146.5" width="359" height="553.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rocket" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NWA-QM-fok">
-                                                        <rect key="frame" x="148.5" y="20" width="62" height="24"/>
+                                                        <rect key="frame" x="149.5" y="20" width="60.5" height="24"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rocket info" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lOF-6m-8zW">
-                                                        <rect key="frame" x="0.0" y="64" width="359" height="16"/>
-                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Rocket info" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KZj-qB-4bt">
+                                                        <rect key="frame" x="8" y="64" width="343" height="481.5"/>
+                                                        <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    </textView>
                                                 </subviews>
+                                                <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstItem="lOF-6m-8zW" firstAttribute="top" secondItem="NWA-QM-fok" secondAttribute="bottom" constant="20" id="23U-Fh-hel"/>
+                                                    <constraint firstItem="KZj-qB-4bt" firstAttribute="top" secondItem="NWA-QM-fok" secondAttribute="bottom" constant="20" id="3Wr-hP-kIu"/>
+                                                    <constraint firstAttribute="trailingMargin" secondItem="KZj-qB-4bt" secondAttribute="trailing" id="3YS-KD-MZ3"/>
+                                                    <constraint firstAttribute="bottomMargin" secondItem="KZj-qB-4bt" secondAttribute="bottom" id="9tr-cr-MM3"/>
                                                     <constraint firstItem="NWA-QM-fok" firstAttribute="centerX" secondItem="Xrs-Af-RjV" secondAttribute="centerX" id="Bey-WA-g9H"/>
-                                                    <constraint firstAttribute="trailing" secondItem="lOF-6m-8zW" secondAttribute="trailing" id="JlH-85-jTz"/>
-                                                    <constraint firstItem="lOF-6m-8zW" firstAttribute="leading" secondItem="Xrs-Af-RjV" secondAttribute="leading" id="LX8-Sm-s3s"/>
+                                                    <constraint firstItem="KZj-qB-4bt" firstAttribute="centerX" secondItem="Xrs-Af-RjV" secondAttribute="centerX" id="dWB-Zy-bcF"/>
+                                                    <constraint firstItem="KZj-qB-4bt" firstAttribute="leading" secondItem="Xrs-Af-RjV" secondAttribute="leadingMargin" id="ipO-UL-feB"/>
                                                     <constraint firstItem="NWA-QM-fok" firstAttribute="top" secondItem="Xrs-Af-RjV" secondAttribute="top" constant="20" id="tT7-Rr-0bf"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
+                                        <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="700" id="Qfb-rc-aNX"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
+                                <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="eTX-c3-fvI" secondAttribute="trailingMargin" constant="8" id="23m-XJ-6F4"/>
                                     <constraint firstItem="eTX-c3-fvI" firstAttribute="top" secondItem="h8z-oV-ULu" secondAttribute="top" id="ARA-sG-hM8"/>
@@ -124,7 +128,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="h8z-oV-ULu" secondAttribute="bottom" id="3H4-oy-4Ie"/>
                             <constraint firstAttribute="leading" secondItem="h8z-oV-ULu" secondAttribute="leading" id="N90-bf-ham"/>
@@ -140,26 +144,28 @@
                         <outlet property="missionDescriptionLabel" destination="C9c-44-dbm" id="795-Us-JMr"/>
                         <outlet property="missionLabel" destination="yOf-Mh-QVT" id="KxI-Q5-8rN"/>
                         <outlet property="missionTypeLabel" destination="VBL-fS-lv8" id="VJU-ez-MqA"/>
-                        <outlet property="rocketInfoLabel" destination="lOF-6m-8zW" id="kNE-64-SIt"/>
+                        <outlet property="rocketInfoTextView" destination="KZj-qB-4bt" id="XHe-Tj-xsi"/>
                         <outlet property="rocketLabel" destination="NWA-QM-fok" id="NQr-y0-1Lp"/>
                         <outlet property="windowLabel" destination="bWm-Gp-i3w" id="ef5-et-UtQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1wq-im-zSt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="520.79999999999995" y="896.85157421289364"/>
+            <point key="canvasLocation" x="1445.5999999999999" y="884.25787106446785"/>
         </scene>
         <!--Launches-->
         <scene sceneID="t6d-B1-jmp">
             <objects>
                 <tableViewController id="2cq-mn-Ypr" customClass="LaunchTableViewController" customModule="Liftoff" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="108" sectionHeaderHeight="28" sectionFooterHeight="28" id="D14-QN-8sl">
+                    <tableView key="view" clipsSubviews="YES" contentMode="redraw" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="108" sectionHeaderHeight="28" sectionFooterHeight="28" id="D14-QN-8sl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="scrollIndicatorInsets" minX="0.0" minY="18" maxX="0.0" maxY="0.0"/>
-                        <color key="separatorColor" red="0.0" green="0.75813514849999997" blue="0.72987196180000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="separatorColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <color key="sectionIndexBackgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="sectionIndexTrackingBackgroundColor" red="0.44705882352941173" green="0.094117647058823528" blue="0.090196078431372548" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="launchCell" rowHeight="110" id="0B9-Gm-Hfm" customClass="LaunchCell" customModule="Liftoff" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="110"/>
@@ -168,40 +174,29 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="109.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="LPl-31-aGI">
-                                            <rect key="frame" x="8" y="8" width="4.5" height="46"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HyE-LF-jGt" userLabel="Rocket Name">
-                                                    <rect key="frame" x="0.0" y="0.0" width="4.5" height="20.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HKt-75-oMe" userLabel="Mission Name">
-                                                    <rect key="frame" x="0.0" y="25.5" width="4.5" height="20.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </stackView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" Rocket" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HyE-LF-jGt" userLabel="Rocket Name">
+                                            <rect key="frame" x="146" y="24" width="83.5" height="31.5"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                            <color key="textColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fu1-YR-EbU" userLabel="Date">
-                                            <rect key="frame" x="8" y="82.5" width="34.5" height="19.5"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                            <nil key="textColor"/>
+                                            <rect key="frame" x="167" y="65.5" width="41.5" height="24"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                            <color key="textColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.88627450980392153" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="leadingMargin" secondItem="LPl-31-aGI" secondAttribute="leading" id="985-u5-t6c"/>
-                                        <constraint firstAttribute="leadingMargin" secondItem="Fu1-YR-EbU" secondAttribute="leading" id="AYI-08-9vo"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="Fu1-YR-EbU" secondAttribute="bottom" id="jHt-z7-pgV"/>
-                                        <constraint firstAttribute="topMargin" secondItem="LPl-31-aGI" secondAttribute="top" id="q1c-hY-1Xz"/>
+                                        <constraint firstItem="HyE-LF-jGt" firstAttribute="centerX" secondItem="sxh-4Y-fjX" secondAttribute="centerX" id="BVK-tO-kEw"/>
+                                        <constraint firstItem="HyE-LF-jGt" firstAttribute="top" secondItem="sxh-4Y-fjX" secondAttribute="topMargin" multiplier="2.2" id="EtZ-NW-V8B"/>
+                                        <constraint firstItem="Fu1-YR-EbU" firstAttribute="centerX" secondItem="sxh-4Y-fjX" secondAttribute="centerX" id="VM6-4Z-txP"/>
+                                        <constraint firstItem="Fu1-YR-EbU" firstAttribute="top" secondItem="HyE-LF-jGt" secondAttribute="bottom" constant="10" id="hSG-ox-miL"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="date" destination="Fu1-YR-EbU" id="yjc-fk-VM1"/>
-                                    <outlet property="missionName" destination="HKt-75-oMe" id="4Uy-To-HdE"/>
                                     <outlet property="rocketName" destination="HyE-LF-jGt" id="dwv-yr-6ky"/>
                                 </connections>
                             </tableViewCell>
@@ -226,7 +221,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sjZ-9L-2qy" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ny5-z9-W2W">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

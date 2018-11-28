@@ -28,16 +28,16 @@ class WikiInfoManager {
                     if page.count == 1 {
                         
                         for (_, value) in page.dictionaryValue {
-                            
+                            let d = value.dictionaryValue["extract"]!.rawString()
                             completion(value.dictionaryValue["extract"]!.stringValue)
                             
                         }
                         
                     }
-                    
-                    
                 }
             }
         }
     }
+    
+    
 }

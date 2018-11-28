@@ -24,8 +24,8 @@ class LaunchInfoViewController: UIViewController {
     @IBOutlet weak var missionTypeLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var rocketLabel: UILabel!
-    @IBOutlet weak var rocketInfoLabel: UILabel!
     @IBOutlet weak var windowLabel: UILabel!
+    @IBOutlet weak var rocketInfoTextView: UITextView!
     
     private let sentenceCap: Int = 3
     
@@ -42,12 +42,10 @@ class LaunchInfoViewController: UIViewController {
                 sentences.removeSubrange((self?.sentenceCap)!..<sentences.count)
                 
                 
-                self?.rocketInfoLabel.text = sentences.joined(separator: ". ").appending(".")
+                self?.rocketInfoTextView.text = text
             }
             
         }
-        
-        
         
         // Do any additional setup after loading the view.
         launchItemSet()

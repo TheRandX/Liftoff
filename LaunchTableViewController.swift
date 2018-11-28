@@ -59,7 +59,7 @@ class LaunchTableViewController: UITableViewController {
         
         // Set the date
         cell.date.text = dateFormatter.string(from: item.date)
-        cell.missionName.text = item.missionName
+        //cell.missionName.text = item.missionName
         cell.rocketName.text = item.rocketName
         
         return cell
