@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class LaunchInfoViewController: UIViewController {
+class LaunchInfoTableViewController: UITableViewController {
     
     var launchItem: Launch!
     
@@ -25,7 +25,7 @@ class LaunchInfoViewController: UIViewController {
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var rocketLabel: UILabel!
     @IBOutlet weak var windowLabel: UILabel!
-    @IBOutlet weak var rocketInfoTextView: UITextView!
+    @IBOutlet weak var rocketInfoLabel: UILabel!
     
     private let sentenceCap: Int = 3
     
@@ -37,12 +37,11 @@ class LaunchInfoViewController: UIViewController {
             
             if let text = articleText {
                 
-                var sentences = text.components(separatedBy: ". ")
+                //var sentences = text.components(separatedBy: ". ")
                 
-                sentences.removeSubrange((self?.sentenceCap)!..<sentences.count)
+                //sentences.removeSubrange((self?.sentenceCap)!..<sentences.count)
                 
-                
-                self?.rocketInfoTextView.text = text
+                self?.rocketInfoLabel.text = text
             }
             
         }

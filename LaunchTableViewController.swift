@@ -17,7 +17,7 @@ class LaunchTableViewController: UITableViewController {
     static let launchManager = LaunchManager()
     let dateFormatter = { () -> DateFormatter in
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM d, yyyy, HH:mm:ss"
+        dateFormatter.dateFormat = "MMMM d"
         return dateFormatter
     }()
     
@@ -77,7 +77,7 @@ class LaunchTableViewController: UITableViewController {
         if let identifier = segue.identifier {
             switch identifier {
             case "launchInfo":
-                if let dvc = segue.destination.contentViewController as? LaunchInfoViewController {
+                if let dvc = segue.destination.contentViewController as? LaunchInfoTableViewController {
                     if let launch = selectedLaunch {
                         dvc.launchItem = launch
                     }
