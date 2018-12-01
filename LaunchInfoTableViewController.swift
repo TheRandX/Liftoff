@@ -8,8 +8,9 @@
 
 import UIKit
 import Alamofire
+import ExpandableCell
 
-class LaunchInfoTableViewController: UITableViewController {
+class LaunchInfoTableViewController: UITableViewController, ExpandableDelegate {
     
     var launchItem: Launch!
     
@@ -26,6 +27,9 @@ class LaunchInfoTableViewController: UITableViewController {
     @IBOutlet weak var rocketLabel: UILabel!
     @IBOutlet weak var windowLabel: UILabel!
     @IBOutlet weak var rocketInfoLabel: UILabel!
+    
+    @IBOutlet var headerCells: [ExpandableCell]!
+    @IBOutlet var infoCells: [UITableViewCell]!
     
     private let sentenceCap: Int = 3
     
@@ -57,6 +61,13 @@ class LaunchInfoTableViewController: UITableViewController {
     
     private func launchItemSet() {
         
+        let nib = UINib(nibName: "InfoCells", bundle: nil)
+        nib.instantiate(withOwner: self, options: nil)
+        
+        for cell in infoCells {
+            cell.awakeFromNib()
+        }
+        
         self.title = launchItem.rocketName
         missionLabel.text = launchItem.missionName
         missionDescriptionLabel.text = launchItem.missions?.first?.description
@@ -74,10 +85,34 @@ class LaunchInfoTableViewController: UITableViewController {
         
         windowLabel.text = windowText
         
-        
-        
-        
         view.setNeedsLayout()
+    }
+    
+    
+    // Delegate methods
+    func expandableTableView(_ expandableTableView: ExpandableTableView, heightsForExpandedRowAt indexPath: IndexPath) -> [CGFloat]? {
+        return [CGFloat(300)]
+    }
+    
+    func expandableTableView(_ expandableTableView: ExpandableTableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 200
+    }
+    
+    func expandableTableView(_ expandableTableView: ExpandableTableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    
+    func expandableTableView(_ expandableTableView: ExpandableTableView, expandedCellsForRowAt indexPath: IndexPath) -> [UITableViewCell]? {
+        return [infoCells[indexPath.row]]
+    }
+    
+    func expandableTableView(_ expandableTableView: ExpandableTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if (headerCells.count <= indexPath.row) {
+            return headerCells[indexPath.row]
+        } else {
+            return headerCells[0]
+        }
     }
     
 }
