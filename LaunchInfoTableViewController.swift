@@ -8,11 +8,14 @@
 
 import UIKit
 import Alamofire
+import AlamofireImage
 import ExpandableCell
 
 class LaunchInfoTableViewController: UITableViewController, ExpandableDelegate {
     
     var launchItem: Launch!
+    
+    var image: UIImage?
     
     let dateFormatter = { () -> DateFormatter in
         let dateFormatter = DateFormatter()
@@ -20,6 +23,7 @@ class LaunchInfoTableViewController: UITableViewController, ExpandableDelegate {
         return dateFormatter
     }()
     
+    @IBOutlet weak var rocketImage: UIImageView!
     @IBOutlet weak var missionLabel: UILabel!
     @IBOutlet weak var missionDescriptionLabel: UILabel!
     @IBOutlet weak var missionTypeLabel: UILabel!
@@ -36,6 +40,13 @@ class LaunchInfoTableViewController: UITableViewController, ExpandableDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Get the rocket image if there is any
+        if let imageURL = launchItem.rocket?.imageURL {
+            rocketImage(fromURL: imageURL) { image in
+                self.rocketImage.image = image
+            }
+        }
+        
         // Get article text form wiki info manager
         WikiInfoManager.getArticleText(articleURL: (launchItem.rocket?.wikiURL)!) { [weak self] articleText in
             
@@ -50,6 +61,10 @@ class LaunchInfoTableViewController: UITableViewController, ExpandableDelegate {
             
         }
         
+        if let expandableTableView = tableView as? ExpandableTableView {
+            expandableTableView.expandableDelegate = self
+        }
+        
         // Do any additional setup after loading the view.
         launchItemSet()
     }
@@ -61,14 +76,16 @@ class LaunchInfoTableViewController: UITableViewController, ExpandableDelegate {
     
     private func launchItemSet() {
         
+        // Instantiate the info cells nib file
         let nib = UINib(nibName: "InfoCells", bundle: nil)
         nib.instantiate(withOwner: self, options: nil)
+        /*
+         for cell in infoCells {
+         cell.awakeFromNib()
+         }*/
         
-        for cell in infoCells {
-            cell.awakeFromNib()
-        }
         
-        self.title = launchItem.rocketName
+        title = launchItem.rocketName
         missionLabel.text = launchItem.missionName
         missionDescriptionLabel.text = launchItem.missions?.first?.description
         missionTypeLabel.text = launchItem.missions?.first?.typeName
@@ -95,7 +112,7 @@ class LaunchInfoTableViewController: UITableViewController, ExpandableDelegate {
     }
     
     func expandableTableView(_ expandableTableView: ExpandableTableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200
+        return headerCells[indexPath.section].frame.height
     }
     
     func expandableTableView(_ expandableTableView: ExpandableTableView, numberOfRowsInSection section: Int) -> Int {
@@ -104,14 +121,36 @@ class LaunchInfoTableViewController: UITableViewController, ExpandableDelegate {
     
     
     func expandableTableView(_ expandableTableView: ExpandableTableView, expandedCellsForRowAt indexPath: IndexPath) -> [UITableViewCell]? {
-        return [infoCells[indexPath.row]]
+        for header in headerCells {
+            header.close()
+        }
+        if let result = infoCells?[indexPath.section] {
+            let arr: [UITableViewCell]? = [result]
+            return arr
+        } else {
+            return nil
+        }
     }
     
     func expandableTableView(_ expandableTableView: ExpandableTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (headerCells.count <= indexPath.row) {
-            return headerCells[indexPath.row]
+        
+        if (headerCells.count > indexPath.section) {
+            return headerCells[indexPath.section]
         } else {
             return headerCells[0]
+        }
+    }
+    
+    func numberOfSections(in expandableTableView: ExpandableTableView) -> Int {
+        return headerCells.count
+    }
+    
+    private func rocketImage(fromURL URL: URL, completion: @escaping (Image) -> Void){
+        Alamofire.request(URL).responseImage() { response in
+            
+            if let image = response.result.value {
+                completion(image)
+            }
         }
     }
     
