@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -31,37 +30,37 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="359" height="146.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mission" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yOf-Mh-QVT">
-                                                        <rect key="frame" x="146" y="20" width="67.5" height="16.5"/>
+                                                        <rect key="frame" x="146" y="20" width="67.5" height="0.0"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mission Description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C9c-44-dbm">
-                                                        <rect key="frame" x="0.0" y="146.5" width="359" height="0.0"/>
+                                                        <rect key="frame" x="0.0" y="130" width="359" height="16.5"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mission Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VBL-fS-lv8">
-                                                        <rect key="frame" x="261.5" y="108.5" width="89.5" height="18"/>
+                                                        <rect key="frame" x="261.5" y="92" width="89.5" height="18"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mission Purpose: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RzF-Db-cyj">
-                                                        <rect key="frame" x="0.0" y="108.5" width="121.5" height="18"/>
+                                                        <rect key="frame" x="0.0" y="92" width="121.5" height="18"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hzv-42-8sI">
-                                                        <rect key="frame" x="157" y="51.5" width="45" height="13.5"/>
+                                                        <rect key="frame" x="157" y="35" width="45" height="13.5"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Window Start - Window End" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWm-Gp-i3w">
-                                                        <rect key="frame" x="106" y="75" width="147.5" height="13.5"/>
+                                                        <rect key="frame" x="106" y="58.5" width="147.5" height="13.5"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -158,7 +157,7 @@
                         <sections>
                             <tableViewSection id="vob-Hu-wMq" userLabel="Mission">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="6M9-hS-UFQ" userLabel="Mission Header" customClass="ExpandableCell" customModule="ExpandableCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="redraw" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="6M9-hS-UFQ" userLabel="Mission Header" customClass="SelectableCell" customModule="Liftoff" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6M9-hS-UFQ" id="o1c-cc-Dqk">
@@ -182,7 +181,7 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="" id="Scu-Ph-qWl" userLabel="Rocket">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="ySb-dB-VUz" userLabel="Rocket Header" customClass="ExpandableCell" customModule="ExpandableCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="redraw" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="ySb-dB-VUz" userLabel="Rocket Header" customClass="SelectableCell" customModule="Liftoff" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ySb-dB-VUz" id="n8n-UF-FYc">
@@ -204,9 +203,9 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="" id="C0D-be-zdh">
+                            <tableViewSection headerTitle="" id="C0D-be-zdh" userLabel="Image">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="NjW-ls-LSE" customClass="ExpandableCell" customModule="ExpandableCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="redraw" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="NjW-ls-LSE" customClass="SelectableCell" customModule="Liftoff" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="88" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NjW-ls-LSE" id="Zbt-ei-6Lb">
@@ -263,6 +262,7 @@
                         </connections>
                     </tableView>
                     <connections>
+                        <outlet property="expandableTableView" destination="WR1-FE-3YI" id="4Ok-WN-W9s"/>
                         <outlet property="missionLabel" destination="iaz-zV-AHj" id="o74-mS-HCd"/>
                         <outlet property="rocketLabel" destination="hwH-I6-oxQ" id="RHh-kR-mn4"/>
                         <outletCollection property="headerCells" destination="6M9-hS-UFQ" collectionClass="NSMutableArray" id="9xh-8k-pC8"/>

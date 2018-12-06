@@ -13,6 +13,7 @@ import ExpandableCell
 
 class LaunchInfoTableViewController: UITableViewController, ExpandableDelegate {
     
+    @IBOutlet var expandableTableView: ExpandableTableView!
     var launchItem: Launch!
     
     var image: UIImage?
@@ -32,7 +33,7 @@ class LaunchInfoTableViewController: UITableViewController, ExpandableDelegate {
     @IBOutlet weak var windowLabel: UILabel!
     @IBOutlet weak var rocketInfoLabel: UILabel!
     
-    @IBOutlet var headerCells: [ExpandableCell]!
+    @IBOutlet var headerCells: [SelectableCell]!
     @IBOutlet var infoCells: [UITableViewCell]!
     
     private let sentenceCap: Int = 3
@@ -55,16 +56,13 @@ class LaunchInfoTableViewController: UITableViewController, ExpandableDelegate {
                 //var sentences = text.components(separatedBy: ". ")
                 
                 //sentences.removeSubrange((self?.sentenceCap)!..<sentences.count)
-                
                 self?.rocketInfoLabel.text = text
+                self?.infoCells[1].setNeedsDisplay()
             }
             
         }
         
-        if let expandableTableView = tableView as? ExpandableTableView {
-            expandableTableView.expandableDelegate = self
-        }
-        
+        expandableTableView.expandableDelegate = self
         // Do any additional setup after loading the view.
         launchItemSet()
     }
@@ -101,14 +99,15 @@ class LaunchInfoTableViewController: UITableViewController, ExpandableDelegate {
         }
         
         windowLabel.text = windowText
-        
+        expandableTableView.autoRemoveSelection = true
+        expandableTableView.open(at: IndexPath(item: 0, section: 0))
         view.setNeedsLayout()
     }
     
     
     // Delegate methods
     func expandableTableView(_ expandableTableView: ExpandableTableView, heightsForExpandedRowAt indexPath: IndexPath) -> [CGFloat]? {
-        return [CGFloat(300)]
+        return [infoCells[indexPath.section].bounds.height]
     }
     
     func expandableTableView(_ expandableTableView: ExpandableTableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -121,12 +120,8 @@ class LaunchInfoTableViewController: UITableViewController, ExpandableDelegate {
     
     
     func expandableTableView(_ expandableTableView: ExpandableTableView, expandedCellsForRowAt indexPath: IndexPath) -> [UITableViewCell]? {
-        for header in headerCells {
-            header.close()
-        }
         if let result = infoCells?[indexPath.section] {
-            let arr: [UITableViewCell]? = [result]
-            return arr
+            return [result]
         } else {
             return nil
         }
@@ -139,6 +134,11 @@ class LaunchInfoTableViewController: UITableViewController, ExpandableDelegate {
         } else {
             return headerCells[0]
         }
+    }
+    
+    // Necessary so that the cells can be expanded
+    func expandableTableView(_ expandableTableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
     
     func numberOfSections(in expandableTableView: ExpandableTableView) -> Int {
