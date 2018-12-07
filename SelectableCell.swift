@@ -24,6 +24,13 @@ class SelectableCell: ExpandableCell {
         contentView.autoresizingMask = .flexibleWidth
         contentView.autoresizesSubviews = true
     }
+    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        
+        
+        
+    }
 
     /*override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

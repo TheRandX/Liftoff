@@ -47,7 +47,7 @@ class LaunchInfoTableViewController: UITableViewController, ExpandableDelegate {
                 self.rocketImage.image = image
             }
         }
-        
+        expandableTableView.animation = .fade
         // Get article text form wiki info manager
         WikiInfoManager.getArticleText(articleURL: (launchItem.rocket?.wikiURL)!) { [weak self] articleText in
             

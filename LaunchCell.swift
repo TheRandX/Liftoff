@@ -24,32 +24,17 @@ class LaunchCell: UITableViewCell {
     
     override func draw(_ rect: CGRect) {
         
-        let path = UIBezierPath()
         let radius = CGFloat(radiusRatio) * min(rect.width, rect.height)
+        let newRect = CGRect(x: rect.minX + boundsOffset, y: rect.minY + boundsOffset, width: rect.width - 2 * boundsOffset, height: rect.height - 2 * boundsOffset)
+        let path = UIBezierPath.init(roundedRect: newRect, cornerRadius: radius)
         
-        let offsetMinX = rect.minX + boundsOffset
-        let offsetMinY = rect.minY + boundsOffset
-        let offsetMaxX = rect.maxX - boundsOffset
-        let offsetMaxY = rect.maxY - boundsOffset
-        
-        path.move(to: CGPoint(x: offsetMinX, y: offsetMinY + radius))
-        path.addArc(withCenter: CGPoint(x: offsetMinX + radius, y: offsetMinY + radius), radius: radius, startAngle: -.pi, endAngle: -.pi/2, clockwise: true)
-        path.addLine(to: CGPoint(x: offsetMaxX - radius, y: offsetMinY))
-        path.addArc(withCenter: CGPoint(x: offsetMaxX - radius, y: offsetMinY + radius), radius: radius, startAngle: -.pi/2, endAngle: 0, clockwise: true)
-        path.addLine(to: CGPoint(x: offsetMaxX, y: offsetMaxY - radius))
-        path.addArc(withCenter: CGPoint(x: offsetMaxX - radius, y: offsetMaxY - radius), radius: radius, startAngle: 0, endAngle: .pi/2, clockwise: true)
-        path.addLine(to: CGPoint(x: offsetMinX + radius, y: offsetMaxY))
-        path.addArc(withCenter: CGPoint(x: offsetMinX + radius, y: offsetMaxY - radius), radius: radius, startAngle: .pi/2, endAngle: -.pi, clockwise: true)
-        path.close()
         path.lineWidth = lineWidth
-        
+ 
         strokeColor.setStroke()
         path.stroke()
         
         fillColor.setFill()
         path.fill()
-        
-        
         
     }
     
