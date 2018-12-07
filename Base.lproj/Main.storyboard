@@ -212,7 +212,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7h4-z0-hH2">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7h4-z0-hH2">
                                                     <rect key="frame" x="15" y="10" width="54" height="24"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                                     <nil key="textColor"/>
@@ -220,6 +220,7 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="7h4-z0-hH2" firstAttribute="centerY" secondItem="Zbt-ei-6Lb" secondAttribute="centerY" id="HMg-2C-kTo"/>
                                                 <constraint firstItem="7h4-z0-hH2" firstAttribute="leading" secondItem="Zbt-ei-6Lb" secondAttribute="leading" constant="15" id="svg-UT-N5z"/>
                                             </constraints>
                                         </tableViewCellContentView>

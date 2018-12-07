@@ -10,12 +10,13 @@ import UIKit
 import Alamofire
 import AlamofireImage
 import ExpandableCell
+import EventKit
 
 class LaunchInfoTableViewController: UITableViewController, ExpandableDelegate {
     
     @IBOutlet var expandableTableView: ExpandableTableView!
     var launchItem: Launch!
-    
+    let eventStore = EKEventStore()
     var image: UIImage?
     
     let dateFormatter = { () -> DateFormatter in
@@ -104,10 +105,41 @@ class LaunchInfoTableViewController: UITableViewController, ExpandableDelegate {
         view.setNeedsLayout()
     }
     
+    @IBAction func notificationClicked(_ sender: UIButton) {
+        eventStore.requestAccess(to: .event) { [weak self] (granted, error) in
+            guard let strongSelf = self else {
+                return
+            }
+            
+            if (granted && error == nil) {
+                debugPrint("Granted")
+                let event = EKEvent(eventStore: strongSelf.eventStore)
+                event.title = strongSelf.launchItem.rocketName + " launch"
+                event.startDate = strongSelf.launchItem.date
+                event.endDate = strongSelf.launchItem.date
+                event.notes = strongSelf.launchItem.missions?.first?.description
+                event.calendar = strongSelf.eventStore.defaultCalendarForNewEvents
+                
+                // This might crash (but shouldnt)
+                let alarm = EKAlarm(relativeOffset: TimeInterval(exactly: -3600)!)
+                event.addAlarm(alarm)
+                do {
+                    try strongSelf.eventStore.save(event, span: .thisEvent)
+                } catch let error {
+                    debugPrint("Failed to save event with error : \(error)")
+                }
+                
+                debugPrint("Saved successfully!")
+            } else {
+                debugPrint("Failed to save event with error : \(String(describing: error)) or access not granted")
+                
+            }
+        }
+    }
     
     // Delegate methods
     func expandableTableView(_ expandableTableView: ExpandableTableView, heightsForExpandedRowAt indexPath: IndexPath) -> [CGFloat]? {
-        return [infoCells[indexPath.section].bounds.height]
+        return [UITableView.automaticDimension]
     }
     
     func expandableTableView(_ expandableTableView: ExpandableTableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -10,8 +10,7 @@ import UIKit
 import ExpandableCell
 
 class SelectableCell: ExpandableCell {
-    
-    
+
     override func layoutSubviews() {
         rightMargin = bounds.maxX*0.15
         super.layoutSubviews()
@@ -23,13 +22,6 @@ class SelectableCell: ExpandableCell {
         
         contentView.autoresizingMask = .flexibleWidth
         contentView.autoresizesSubviews = true
-    }
-    
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
-        
-        
-        
     }
 
     /*override func setSelected(_ selected: Bool, animated: Bool) {

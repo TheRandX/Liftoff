@@ -22,7 +22,7 @@
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="200" id="Nr4-N1-0MJ" userLabel="Mission Cell">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="200" id="Nr4-N1-0MJ" userLabel="Mission Cell" customClass="LaunchInfoCell" customModule="Liftoff" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Nr4-N1-0MJ" id="Q6F-8c-zFw">
@@ -30,13 +30,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mission Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CJG-wd-Q92">
-                        <rect key="frame" x="260" y="69" width="100" height="20.5"/>
+                        <rect key="frame" x="260" y="98.5" width="100" height="20.5"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mission Purpose: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GEK-bL-tg7">
-                        <rect key="frame" x="15" y="69" width="135.5" height="20.5"/>
+                        <rect key="frame" x="15" y="98.5" width="135.5" height="20.5"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -47,14 +47,26 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Window Start - Window End" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5BU-vH-pzv">
-                        <rect key="frame" x="114" y="43.5" width="147.5" height="13.5"/>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mission Description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LdX-ox-ckO">
-                        <rect key="frame" x="15" y="109.5" width="345" height="20.5"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="QAK-rK-Og2">
+                        <rect key="frame" x="91.5" y="48.5" width="192.5" height="30"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Window Start - Window End" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5BU-vH-pzv">
+                                <rect key="frame" x="0.0" y="0.0" width="147.5" height="30"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VXt-bo-lh7">
+                                <rect key="frame" x="162.5" y="0.0" width="30" height="30"/>
+                                <state key="normal" title="Bell"/>
+                                <connections>
+                                    <action selector="notificationClicked:" destination="-1" eventType="touchUpInside" id="FgN-LR-v7S"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </stackView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Mission Description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LdX-ox-ckO">
+                        <rect key="frame" x="15" y="139" width="345" height="50"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -63,20 +75,22 @@
                 <constraints>
                     <constraint firstItem="LdX-ox-ckO" firstAttribute="width" relation="lessThanOrEqual" secondItem="Q6F-8c-zFw" secondAttribute="width" id="6Pz-FL-BlX"/>
                     <constraint firstItem="LdX-ox-ckO" firstAttribute="top" secondItem="GEK-bL-tg7" secondAttribute="bottom" constant="20" id="8OV-Zh-RRx"/>
-                    <constraint firstItem="5BU-vH-pzv" firstAttribute="top" secondItem="eTS-GM-684" secondAttribute="bottom" constant="10" id="8s2-9x-saF"/>
-                    <constraint firstItem="5BU-vH-pzv" firstAttribute="centerX" secondItem="Q6F-8c-zFw" secondAttribute="centerX" id="Cc5-wl-lzV"/>
                     <constraint firstItem="CJG-wd-Q92" firstAttribute="top" secondItem="GEK-bL-tg7" secondAttribute="top" id="CsA-xq-e76"/>
                     <constraint firstAttribute="trailing" secondItem="CJG-wd-Q92" secondAttribute="trailing" constant="15" id="DIg-x3-OQQ"/>
+                    <constraint firstItem="QAK-rK-Og2" firstAttribute="centerX" secondItem="Q6F-8c-zFw" secondAttribute="centerX" id="ET0-Ib-WLC"/>
                     <constraint firstItem="LdX-ox-ckO" firstAttribute="centerX" secondItem="Q6F-8c-zFw" secondAttribute="centerX" id="JpG-Wc-wVC"/>
-                    <constraint firstItem="GEK-bL-tg7" firstAttribute="top" secondItem="5BU-vH-pzv" secondAttribute="bottom" constant="12" id="UBK-te-Uxf"/>
                     <constraint firstItem="eTS-GM-684" firstAttribute="top" secondItem="Q6F-8c-zFw" secondAttribute="top" constant="20" id="Vnj-Vn-FTZ"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="LdX-ox-ckO" secondAttribute="bottom" id="YIp-x2-uUi"/>
                     <constraint firstItem="eTS-GM-684" firstAttribute="centerX" secondItem="Q6F-8c-zFw" secondAttribute="centerX" id="b51-Xh-4NC"/>
+                    <constraint firstItem="QAK-rK-Og2" firstAttribute="top" secondItem="eTS-GM-684" secondAttribute="bottom" constant="15" id="cMv-i0-wft"/>
                     <constraint firstItem="LdX-ox-ckO" firstAttribute="leading" secondItem="Q6F-8c-zFw" secondAttribute="leading" constant="15" id="jEg-NY-sdc"/>
+                    <constraint firstItem="GEK-bL-tg7" firstAttribute="top" secondItem="QAK-rK-Og2" secondAttribute="bottom" constant="20" id="xkM-be-VYy"/>
                     <constraint firstItem="GEK-bL-tg7" firstAttribute="leading" secondItem="Q6F-8c-zFw" secondAttribute="leading" constant="15" id="yuT-Dc-kFE"/>
                 </constraints>
             </tableViewCellContentView>
+            <point key="canvasLocation" x="53.600000000000001" y="48.575712143928037"/>
         </tableViewCell>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="200" id="91c-yo-lS4" userLabel="Rocket Cell">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="200" id="91c-yo-lS4" userLabel="Rocket Cell" customClass="LaunchInfoCell" customModule="Liftoff" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="91c-yo-lS4" id="T7I-Z9-uaq">
@@ -98,9 +112,9 @@
                     <constraint firstItem="eY7-bf-e4V" firstAttribute="width" relation="lessThanOrEqual" secondItem="T7I-Z9-uaq" secondAttribute="width" id="sWO-WR-ZUh"/>
                 </constraints>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="54" y="286"/>
+            <point key="canvasLocation" x="54" y="489"/>
         </tableViewCell>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="392" id="swk-jA-kni" userLabel="Picture Cell">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="392" id="swk-jA-kni" userLabel="Picture Cell" customClass="LaunchInfoCell" customModule="Liftoff" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="392"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="swk-jA-kni" id="YVC-MZ-7zW">
