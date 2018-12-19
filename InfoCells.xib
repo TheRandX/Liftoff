@@ -9,21 +9,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LaunchInfoViewController" customModule="Liftoff" customModuleProvider="target">
-            <connections>
-                <outlet property="locationView" destination="ASX-nm-sxq" id="AsC-Vi-1uF"/>
-                <outlet property="missionDescriptionLabel" destination="GfL-pb-Kwr" id="qKD-1g-QFV"/>
-                <outlet property="missionTypeLabel" destination="LBS-mj-HC9" id="enm-V7-bUe"/>
-                <outlet property="missionView" destination="dli-Ye-r9g" id="96d-SW-1JW"/>
-                <outlet property="rocketImage" destination="Hxm-Ni-es9" id="lcY-x6-L2A"/>
-                <outlet property="rocketInfoLabel" destination="mrQ-KG-5uY" id="57b-4q-wj7"/>
-                <outlet property="rocketView" destination="oRm-fR-CjA" id="1Eg-7U-fwT"/>
-            </connections>
-        </placeholder>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LaunchInfoViewController" customModule="Liftoff" customModuleProvider="target"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="dli-Ye-r9g" userLabel="Mission View" customClass="OvalView" customModule="Liftoff" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="166"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mission Description" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GfL-pb-Kwr">
                     <rect key="frame" x="0.0" y="80.5" width="375" height="20.5"/>

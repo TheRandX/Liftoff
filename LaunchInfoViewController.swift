@@ -11,8 +11,9 @@ import Alamofire
 import AlamofireImage
 import ExpandableCell
 import EventKit
+import MapKit
 
-class LaunchInfoViewController: UIViewController {
+class LaunchInfoViewController: UIViewController, SegmentedDataSource {
     
     var launchItem: Launch!
     let eventStore = EKEventStore()
@@ -24,20 +25,19 @@ class LaunchInfoViewController: UIViewController {
         return dateFormatter
     }()
     
-    @IBOutlet weak var rocketImage: UIImageView!
     //////@IBOutlet weak var missionLabel: UILabel!
-    @IBOutlet weak var missionDescriptionLabel: UILabel!
-    @IBOutlet weak var missionTypeLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var rocketLabel: UILabel!
     //////@IBOutlet weak var windowLabel: UILabel!
-    @IBOutlet weak var rocketInfoLabel: UILabel!
     
-    @IBOutlet weak var sectionParentView: UIView!
-    @IBOutlet var missionView: UIView!
-    @IBOutlet var rocketView: UIView!
-    @IBOutlet var locationView: UIView!
+    @IBOutlet var segmentedViews: [UIView]!
     
+    private var missionDescription: String?
+    private var missionType: String?
+    
+    // These two properties are queried from the internet and therefore need a property observer to update them
+    private var rocketInfo: String? { didSet{ updateSegmentedViews() }}
+    private var rocketImage: UIImage? { didSet{ updateSegmentedViews() }}
     
     private let sentenceCap: Int = 3
     
@@ -47,7 +47,7 @@ class LaunchInfoViewController: UIViewController {
         // Get the rocket image if there is any
         if let imageURL = launchItem.rocket?.imageURL {
             rocketImage(fromURL: imageURL) { image in
-                self.rocketImage.image = image
+                self.rocketImage = image
             }
         }
         
@@ -59,35 +59,14 @@ class LaunchInfoViewController: UIViewController {
                 //var sentences = text.components(separatedBy: ". ")
                 
                 //sentences.removeSubrange((self?.sentenceCap)!..<sentences.count)
-                self?.rocketInfoLabel.text = text
+                self?.rocketInfo = text
             }
             
         }
         
-        // Instantiate the info cells nib file
-        let nib = UINib(nibName: "InfoCells", bundle: nil)
-        nib.instantiate(withOwner: self, options: nil)
-        
-        sectionParentView.addSubview(missionView)
-        sectionParentView.addSubview(rocketView)
-        sectionParentView.addSubview(locationView)
-        
-        rocketView.isHidden = true
-        locationView.isHidden = true
-        
-        var constraint = NSLayoutConstraint(item: missionView, attribute: .top, relatedBy: .equal, toItem: sectionParentView, attribute: .top, multiplier: 1, constant: 0)
-        sectionParentView.addConstraint(constraint)
-        constraint = NSLayoutConstraint(item: missionView, attribute: .right, relatedBy: .equal, toItem: sectionParentView, attribute: .right, multiplier: 1, constant: 0)
-        sectionParentView.addConstraint(constraint)
-        constraint = NSLayoutConstraint(item: missionView, attribute: .bottom, relatedBy: .equal, toItem: sectionParentView, attribute: .bottom, multiplier: 1, constant: 0)
-        sectionParentView.addConstraint(constraint)
-        constraint = NSLayoutConstraint(item: missionView, attribute: .left, relatedBy: .equal, toItem: sectionParentView, attribute: .left, multiplier: 1, constant: 0)
-        sectionParentView.addConstraint(constraint)
-        
-        
-        
         // Do any additional setup after loading the view.
         launchItemSet()
+        updateSegmentedViews()
     }
     
     override func didReceiveMemoryWarning() {
@@ -97,14 +76,16 @@ class LaunchInfoViewController: UIViewController {
     
     private func launchItemSet() {
         
+        // Sort the outlet collection by tag order
+        segmentedViews.sort(by: { $0.tag < $1.tag })
+        
         title = launchItem.rocketName
         //////missionLabel.text = launchItem.missionName
-        missionDescriptionLabel.text = launchItem.missions?.first?.description
-        missionTypeLabel.text = launchItem.missions?.first?.typeName
+        missionDescription = launchItem.missions?.first?.description
+        missionType = launchItem.missions?.first?.typeName
         locationLabel.text = launchItem.location?.pads?.first?.name
         
         rocketLabel.text = launchItem.rocket?.name
-        
         
         var windowText = dateFormatter.string(from: launchItem.windowstart)
         
@@ -148,10 +129,42 @@ class LaunchInfoViewController: UIViewController {
         }
     }
     
-    @IBAction func switchView(_ sender: Any) {
+    @IBAction func switchView(_ sender: UISegmentedControl) {
+        animateViewSwitch(withDuration: 0.5, showView: sender.selectedSegmentIndex)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let identifier = segue.identifier {
+            switch identifier {
+            case "embedSegmented":
+                if let destinationVC = segue.destination as? SegmentedViewController {
+                    destinationVC.dataSource = self
+                }
+            default:
+                return
+            }
+        }
+    }
+    
+    private func updateSegmentedViews() {
+        for child in children {
+            if let childVC = child as? SegmentedViewController {
+                childVC.viewWillAppear(true)
+            }
+        }
+    }
+    
+    private func animateViewSwitch(withDuration duration: TimeInterval, showView: Int) {
         
-        
-        
+        UIView.animate(withDuration: duration, animations: {
+            for i in 0..<self.segmentedViews.count {
+                if (showView == i) {
+                    self.segmentedViews[i].alpha = 1
+                } else {
+                    self.segmentedViews[i].alpha = 0
+                }
+            }
+        })
     }
     
     private func rocketImage(fromURL URL: URL, completion: @escaping (Image) -> Void){
@@ -161,6 +174,22 @@ class LaunchInfoViewController: UIViewController {
                 completion(image)
             }
         }
+    }
+    
+    // MARK: Data source methods
+    
+    func missionData(missionType: UILabel!, missionDescription: UILabel!) {
+        missionType.text = self.missionType
+        missionDescription.text = self.missionDescription
+    }
+    
+    func rocketData(rocketInfo: UILabel!, rocketImage: UIImageView!) {
+        rocketInfo.text = self.rocketInfo
+        rocketImage.image = self.rocketImage
+    }
+    
+    func locationData(locationView: MKMapView!) {
+        return
     }
     
 }
