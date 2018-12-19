@@ -77,7 +77,7 @@ class LaunchTableViewController: UITableViewController {
         if let identifier = segue.identifier {
             switch identifier {
             case "launchInfo":
-                if let dvc = segue.destination.contentViewController as? LaunchInfoTableViewController {
+                if let dvc = segue.destination.contentViewController as? LaunchInfoViewController {
                     if let launch = selectedLaunch {
                         dvc.launchItem = launch
                     }

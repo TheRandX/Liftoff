@@ -12,9 +12,8 @@ import AlamofireImage
 import ExpandableCell
 import EventKit
 
-class LaunchInfoTableViewController: UITableViewController, ExpandableDelegate {
+class LaunchInfoViewController: UIViewController {
     
-    @IBOutlet var expandableTableView: ExpandableTableView!
     var launchItem: Launch!
     let eventStore = EKEventStore()
     var image: UIImage?
@@ -26,16 +25,19 @@ class LaunchInfoTableViewController: UITableViewController, ExpandableDelegate {
     }()
     
     @IBOutlet weak var rocketImage: UIImageView!
-    @IBOutlet weak var missionLabel: UILabel!
+    //////@IBOutlet weak var missionLabel: UILabel!
     @IBOutlet weak var missionDescriptionLabel: UILabel!
     @IBOutlet weak var missionTypeLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var rocketLabel: UILabel!
-    @IBOutlet weak var windowLabel: UILabel!
+    //////@IBOutlet weak var windowLabel: UILabel!
     @IBOutlet weak var rocketInfoLabel: UILabel!
     
-    @IBOutlet var headerCells: [SelectableCell]!
-    @IBOutlet var infoCells: [UITableViewCell]!
+    @IBOutlet weak var sectionParentView: UIView!
+    @IBOutlet var missionView: UIView!
+    @IBOutlet var rocketView: UIView!
+    @IBOutlet var locationView: UIView!
+    
     
     private let sentenceCap: Int = 3
     
@@ -48,7 +50,7 @@ class LaunchInfoTableViewController: UITableViewController, ExpandableDelegate {
                 self.rocketImage.image = image
             }
         }
-        expandableTableView.animation = .fade
+        
         // Get article text form wiki info manager
         WikiInfoManager.getArticleText(articleURL: (launchItem.rocket?.wikiURL)!) { [weak self] articleText in
             
@@ -58,12 +60,32 @@ class LaunchInfoTableViewController: UITableViewController, ExpandableDelegate {
                 
                 //sentences.removeSubrange((self?.sentenceCap)!..<sentences.count)
                 self?.rocketInfoLabel.text = text
-                self?.infoCells[1].setNeedsDisplay()
             }
             
         }
         
-        expandableTableView.expandableDelegate = self
+        // Instantiate the info cells nib file
+        let nib = UINib(nibName: "InfoCells", bundle: nil)
+        nib.instantiate(withOwner: self, options: nil)
+        
+        sectionParentView.addSubview(missionView)
+        sectionParentView.addSubview(rocketView)
+        sectionParentView.addSubview(locationView)
+        
+        rocketView.isHidden = true
+        locationView.isHidden = true
+        
+        var constraint = NSLayoutConstraint(item: missionView, attribute: .top, relatedBy: .equal, toItem: sectionParentView, attribute: .top, multiplier: 1, constant: 0)
+        sectionParentView.addConstraint(constraint)
+        constraint = NSLayoutConstraint(item: missionView, attribute: .right, relatedBy: .equal, toItem: sectionParentView, attribute: .right, multiplier: 1, constant: 0)
+        sectionParentView.addConstraint(constraint)
+        constraint = NSLayoutConstraint(item: missionView, attribute: .bottom, relatedBy: .equal, toItem: sectionParentView, attribute: .bottom, multiplier: 1, constant: 0)
+        sectionParentView.addConstraint(constraint)
+        constraint = NSLayoutConstraint(item: missionView, attribute: .left, relatedBy: .equal, toItem: sectionParentView, attribute: .left, multiplier: 1, constant: 0)
+        sectionParentView.addConstraint(constraint)
+        
+        
+        
         // Do any additional setup after loading the view.
         launchItemSet()
     }
@@ -75,17 +97,8 @@ class LaunchInfoTableViewController: UITableViewController, ExpandableDelegate {
     
     private func launchItemSet() {
         
-        // Instantiate the info cells nib file
-        let nib = UINib(nibName: "InfoCells", bundle: nil)
-        nib.instantiate(withOwner: self, options: nil)
-        /*
-         for cell in infoCells {
-         cell.awakeFromNib()
-         }*/
-        
-        
         title = launchItem.rocketName
-        missionLabel.text = launchItem.missionName
+        //////missionLabel.text = launchItem.missionName
         missionDescriptionLabel.text = launchItem.missions?.first?.description
         missionTypeLabel.text = launchItem.missions?.first?.typeName
         locationLabel.text = launchItem.location?.pads?.first?.name
@@ -99,9 +112,7 @@ class LaunchInfoTableViewController: UITableViewController, ExpandableDelegate {
             windowText.append(" - \(dateFormatter.string(from: launchItem.windowend))")
         }
         
-        windowLabel.text = windowText
-        expandableTableView.autoRemoveSelection = true
-        expandableTableView.open(at: IndexPath(item: 0, section: 0))
+        //////windowLabel.text = windowText
         view.setNeedsLayout()
     }
     
@@ -137,44 +148,10 @@ class LaunchInfoTableViewController: UITableViewController, ExpandableDelegate {
         }
     }
     
-    // Delegate methods
-    func expandableTableView(_ expandableTableView: ExpandableTableView, heightsForExpandedRowAt indexPath: IndexPath) -> [CGFloat]? {
-        return [UITableView.automaticDimension]
-    }
-    
-    func expandableTableView(_ expandableTableView: ExpandableTableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return headerCells[indexPath.section].frame.height
-    }
-    
-    func expandableTableView(_ expandableTableView: ExpandableTableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    
-    func expandableTableView(_ expandableTableView: ExpandableTableView, expandedCellsForRowAt indexPath: IndexPath) -> [UITableViewCell]? {
-        if let result = infoCells?[indexPath.section] {
-            return [result]
-        } else {
-            return nil
-        }
-    }
-    
-    func expandableTableView(_ expandableTableView: ExpandableTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    @IBAction func switchView(_ sender: Any) {
         
-        if (headerCells.count > indexPath.section) {
-            return headerCells[indexPath.section]
-        } else {
-            return headerCells[0]
-        }
-    }
-    
-    // Necessary so that the cells can be expanded
-    func expandableTableView(_ expandableTableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    func numberOfSections(in expandableTableView: ExpandableTableView) -> Int {
-        return headerCells.count
+        
+        
     }
     
     private func rocketImage(fromURL URL: URL, completion: @escaping (Image) -> Void){
