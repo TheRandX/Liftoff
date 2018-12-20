@@ -9,23 +9,25 @@
 import UIKit
 import Alamofire
 import AlamofireImage
-import ExpandableCell
 import EventKit
 import MapKit
+import MarqueeLabel
 
 class LaunchInfoViewController: UIViewController, SegmentedDataSource {
     
     var launchItem: Launch!
-    let eventStore = EKEventStore()
-    var image: UIImage?
+    private let eventStore = EKEventStore()
+    private var image: UIImage?
     
-    let dateFormatter = { () -> DateFormatter in
+    private let timeUnits: Set<Calendar.Component> = [.day, .hour, .minute, .second]
+    
+    private let dateFormatter = { () -> DateFormatter in
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM d, yyyy, HH:mm:ss"
         return dateFormatter
     }()
     
-    let intervalFormatter = { () -> DateComponentsFormatter in
+    private let intervalFormatter = { () -> DateComponentsFormatter in
         let intervalFormatter = DateComponentsFormatter()
         intervalFormatter.allowedUnits = [.hour, .minute]
         intervalFormatter.unitsStyle = .positional
@@ -34,9 +36,9 @@ class LaunchInfoViewController: UIViewController, SegmentedDataSource {
     }()
     
     //////@IBOutlet weak var missionLabel: UILabel!
-    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var locationLabel: MarqueeLabel!
     @IBOutlet weak var rocketLabel: UILabel!
-    @IBOutlet weak var timeRemainingLabel: UILabel!
+    @IBOutlet weak var countdownView: TimeCellView!
     //////@IBOutlet weak var windowLabel: UILabel!
     
     @IBOutlet var segmentedViews: [UIView]!
@@ -64,7 +66,6 @@ class LaunchInfoViewController: UIViewController, SegmentedDataSource {
         WikiInfoManager.getArticleText(articleURL: (launchItem.rocket?.wikiURL)!) { [weak self] articleText in
             
             if let text = articleText {
-                
                 //var sentences = text.components(separatedBy: ". ")
                 
                 //sentences.removeSubrange((self?.sentenceCap)!..<sentences.count)
@@ -83,6 +84,11 @@ class LaunchInfoViewController: UIViewController, SegmentedDataSource {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        runTimer()
+    }
+    
     private func launchItemSet() {
         
         // Sort the outlet collection by tag order
@@ -93,7 +99,16 @@ class LaunchInfoViewController: UIViewController, SegmentedDataSource {
         missionDescription = launchItem.missions?.first?.description
         missionType = launchItem.missions?.first?.typeName
         locationLabel.text = launchItem.location?.pads?.first?.name
-        timeRemainingLabel.text = "T- " + (intervalFormatter.string(from: launchItem.date.timeIntervalSinceNow) ?? "Error")
+        
+        // Run the timer that initialises and updates the countdown view
+        runTimer()
+        
+        // Run the scroll animation for the location label
+        locationLabel.animationCurve = .easeInOut
+        locationLabel.type = .continuous
+        locationLabel.triggerScrollStart()
+        
+        //timeRemainingLabel.text = "T- " + (intervalFormatter.string(from: launchItem.date.timeIntervalSinceNow) ?? "Error")
         
         rocketLabel.text = launchItem.rocket?.name
         
@@ -186,8 +201,24 @@ class LaunchInfoViewController: UIViewController, SegmentedDataSource {
         }
     }
     
-    // MARK: Data source methods
+    private func runTimer() {
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] (timer) in
+            
+            guard let strongSelf = self else { return }
+            
+            var timeRemaining = NSCalendar.current.dateComponents(strongSelf.timeUnits, from: Date(), to: strongSelf.launchItem.date)
+            timeRemaining.timeZone = TimeZone.current
+            if let day = timeRemaining.day, let hour = timeRemaining.hour, let minute = timeRemaining.minute, let second = timeRemaining.second {
+                
+                strongSelf.countdownView.days.text = String(day)
+                strongSelf.countdownView.hours.text = String(hour)
+                strongSelf.countdownView.minutes.text = String(minute)
+                strongSelf.countdownView.seconds.text = String(second)
+            }
+        }
+    }
     
+    // MARK: Data source methods
     func missionData(missionType: UILabel!, missionDescription: UILabel!) {
         missionType.text = self.missionType
         missionDescription.text = self.missionDescription
