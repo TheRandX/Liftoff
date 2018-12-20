@@ -23,10 +23,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="Ndz-y2-hlP" userLabel="Root Stack View">
-                                <rect key="frame" x="24" y="84" width="327" height="609"/>
+                                <rect key="frame" x="24" y="84" width="327" height="608"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="51" translatesAutoresizingMaskIntoConstraints="NO" id="oHh-iV-Bjt" userLabel="Header Stack View">
-                                        <rect key="frame" x="0.0" y="0.0" width="327" height="215"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="327" height="214.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Xch-ZV-E4X" userLabel="Top Bar Stack View">
                                                 <rect key="frame" x="0.0" y="0.0" width="327" height="36"/>
@@ -47,7 +47,7 @@
                                                 </subviews>
                                             </stackView>
                                             <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Z19-qc-6FH" userLabel="Info View" customClass="OvalView" customModule="Liftoff" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="87" width="327" height="128"/>
+                                                <rect key="frame" x="0.0" y="87" width="327" height="127.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="fillProportionally" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Zsl-f5-MrA" userLabel="Info View Stack View">
                                                         <rect key="frame" x="0.0" y="20" width="327" height="66"/>
@@ -88,8 +88,8 @@
                                             <constraint firstItem="Xch-ZV-E4X" firstAttribute="width" secondItem="oHh-iV-Bjt" secondAttribute="width" id="xXo-1r-MJ1"/>
                                         </constraints>
                                     </stackView>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="FjM-1g-os0">
-                                        <rect key="frame" x="10" y="248" width="307" height="29"/>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="FjM-1g-os0">
+                                        <rect key="frame" x="10" y="247.5" width="307" height="29"/>
                                         <segments>
                                             <segment title="Mission"/>
                                             <segment title="Rocket"/>
@@ -101,22 +101,22 @@
                                         </connections>
                                     </segmentedControl>
                                     <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="Nbs-tJ-PE9" userLabel="Segmented Info View">
-                                        <rect key="frame" x="0.0" y="309" width="327" height="300"/>
+                                        <rect key="frame" x="0.0" y="308.5" width="327" height="299.5"/>
                                         <subviews>
                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pk4-Vd-kSQ" userLabel="Mission Container">
-                                                <rect key="frame" x="0.0" y="0.0" width="327" height="300"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="327" height="299.5"/>
                                                 <connections>
                                                     <segue destination="9gf-wu-8vH" kind="embed" identifier="embedSegmented" id="ykn-nm-pJx"/>
                                                 </connections>
                                             </containerView>
                                             <containerView opaque="NO" alpha="0.0" tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Huk-1Y-Rcy" userLabel="Rocket View">
-                                                <rect key="frame" x="0.0" y="0.0" width="327" height="300"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="327" height="299.5"/>
                                                 <connections>
                                                     <segue destination="3cK-Re-JkF" kind="embed" identifier="embedSegmented" id="sRV-bF-E2w"/>
                                                 </connections>
                                             </containerView>
                                             <containerView opaque="NO" alpha="0.0" tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I1W-P8-aTI" userLabel="Location Container">
-                                                <rect key="frame" x="0.0" y="0.0" width="327" height="300"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="327" height="299.5"/>
                                                 <connections>
                                                     <segue destination="XAh-QA-MPv" kind="embed" identifier="embedSegmented" id="ZF1-Jl-moV"/>
                                                 </connections>
@@ -132,7 +132,7 @@
                                             <constraint firstAttribute="bottom" secondItem="Pk4-Vd-kSQ" secondAttribute="bottom" id="SNR-Up-2vK"/>
                                             <constraint firstAttribute="bottom" secondItem="Huk-1Y-Rcy" secondAttribute="bottom" id="V4K-ST-zcc"/>
                                             <constraint firstItem="Huk-1Y-Rcy" firstAttribute="leading" secondItem="Nbs-tJ-PE9" secondAttribute="leading" id="c4m-es-pMe"/>
-                                            <constraint firstAttribute="height" constant="300" id="iU1-Wn-yUE"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="300" id="iU1-Wn-yUE"/>
                                             <constraint firstItem="I1W-P8-aTI" firstAttribute="top" secondItem="Nbs-tJ-PE9" secondAttribute="top" id="jlL-dG-RUp"/>
                                             <constraint firstAttribute="trailing" secondItem="Huk-1Y-Rcy" secondAttribute="trailing" id="mAh-IO-6a4"/>
                                             <constraint firstItem="Huk-1Y-Rcy" firstAttribute="top" secondItem="Nbs-tJ-PE9" secondAttribute="top" id="y6L-TI-lqE"/>
@@ -150,6 +150,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.82352941176470584" green="0.8901960784313725" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="TkV-Zx-jms" firstAttribute="top" secondItem="Ndz-y2-hlP" secondAttribute="bottom" constant="8" id="2aX-OO-ZEH"/>
                             <constraint firstItem="Ndz-y2-hlP" firstAttribute="leading" secondItem="JZj-Fm-jbt" secondAttribute="leadingMargin" constant="8" id="OMo-T3-6UQ"/>
                             <constraint firstItem="Ndz-y2-hlP" firstAttribute="top" secondItem="Sh9-6M-VNb" secondAttribute="bottom" constant="20" id="UNK-T2-BAZ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Ndz-y2-hlP" secondAttribute="trailing" constant="8" id="lIp-Wx-RHi"/>
@@ -160,6 +161,7 @@
                     <connections>
                         <outlet property="locationLabel" destination="OA4-La-n8H" id="3Wo-Ib-eXo"/>
                         <outlet property="rocketLabel" destination="XXf-rr-DZ7" id="cNX-uf-Mee"/>
+                        <outlet property="timeRemainingLabel" destination="0ig-F3-1bF" id="8Ei-aw-FSO"/>
                         <outletCollection property="segmentedViews" destination="Pk4-Vd-kSQ" collectionClass="NSMutableArray" id="cge-pu-YXv"/>
                         <outletCollection property="segmentedViews" destination="Huk-1Y-Rcy" collectionClass="NSMutableArray" id="R0R-wK-Wq3"/>
                         <outletCollection property="segmentedViews" destination="I1W-P8-aTI" collectionClass="NSMutableArray" id="fmV-NT-U0S"/>
@@ -254,25 +256,27 @@
             <objects>
                 <viewController id="9gf-wu-8vH" userLabel="Mission View Controller" customClass="MissionViewController" customModule="Liftoff" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xXo-43-rMy" userLabel="Mission View" customClass="OvalView" customModule="Liftoff" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="327" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="327" height="299.5"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mission Description" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ouD-iS-j5x">
-                                <rect key="frame" x="0.0" y="80.5" width="327" height="20.5"/>
+                                <rect key="frame" x="8" y="80.5" width="311" height="20.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mission Purpose" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OWn-ch-h1o">
-                                <rect key="frame" x="100.5" y="30" width="126.5" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mission Purpose" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OWn-ch-h1o">
+                                <rect key="frame" x="8" y="30" width="311" height="20.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="aEh-I1-Lef" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ouD-iS-j5x" secondAttribute="bottom" constant="30" id="Dko-CF-g28"/>
-                            <constraint firstItem="ouD-iS-j5x" firstAttribute="width" secondItem="xXo-43-rMy" secondAttribute="width" id="NsD-lG-8Sn"/>
+                            <constraint firstItem="OWn-ch-h1o" firstAttribute="width" secondItem="xXo-43-rMy" secondAttribute="width" constant="-16" id="GZ4-gR-0LP"/>
+                            <constraint firstItem="ouD-iS-j5x" firstAttribute="width" secondItem="xXo-43-rMy" secondAttribute="width" constant="-16" id="NsD-lG-8Sn"/>
                             <constraint firstItem="OWn-ch-h1o" firstAttribute="centerX" secondItem="xXo-43-rMy" secondAttribute="centerX" id="Tbi-7Z-5sM"/>
                             <constraint firstItem="ouD-iS-j5x" firstAttribute="top" secondItem="OWn-ch-h1o" secondAttribute="bottom" constant="30" id="sf7-bB-k7x"/>
                             <constraint firstItem="ouD-iS-j5x" firstAttribute="centerX" secondItem="xXo-43-rMy" secondAttribute="centerX" id="suA-Z0-GSI"/>
@@ -299,24 +303,26 @@
             <objects>
                 <viewController id="XAh-QA-MPv" userLabel="Rocket View Controller" customClass="RocketViewController" customModule="Liftoff" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" tag="1" contentMode="scaleToFill" id="ggd-PG-V0a" userLabel="Rocket View" customClass="OvalView" customModule="Liftoff" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="327" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="327" height="299.5"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rocket Info" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xHP-zf-Yq5" userLabel="Rocket Info">
-                                <rect key="frame" x="8" y="20" width="86" height="20.5"/>
+                                <rect key="frame" x="8" y="20" width="311" height="20.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="L23-Hb-8bb">
-                                <rect key="frame" x="0.0" y="70.5" width="327" height="221.5"/>
+                                <rect key="frame" x="0.0" y="70.5" width="327" height="221"/>
                             </imageView>
                         </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="L23-Hb-8bb" firstAttribute="top" secondItem="xHP-zf-Yq5" secondAttribute="bottom" constant="30" id="41Q-tS-MdY"/>
                             <constraint firstItem="YGb-Jd-AAu" firstAttribute="bottom" secondItem="L23-Hb-8bb" secondAttribute="bottom" constant="8" id="R3W-7u-TUN"/>
                             <constraint firstItem="L23-Hb-8bb" firstAttribute="leading" secondItem="YGb-Jd-AAu" secondAttribute="leading" id="TMS-R1-Fks"/>
                             <constraint firstItem="YGb-Jd-AAu" firstAttribute="trailing" secondItem="L23-Hb-8bb" secondAttribute="trailing" id="geH-9W-WSV"/>
+                            <constraint firstItem="YGb-Jd-AAu" firstAttribute="trailing" secondItem="xHP-zf-Yq5" secondAttribute="trailing" constant="8" id="gkq-GQ-5Et"/>
                             <constraint firstItem="xHP-zf-Yq5" firstAttribute="leading" secondItem="YGb-Jd-AAu" secondAttribute="leading" constant="8" id="oeE-u4-ue2"/>
                             <constraint firstItem="xHP-zf-Yq5" firstAttribute="top" secondItem="YGb-Jd-AAu" secondAttribute="top" constant="20" id="zno-gn-iw2"/>
                         </constraints>
@@ -341,11 +347,11 @@
             <objects>
                 <viewController id="3cK-Re-JkF" userLabel="Location View Controller" customClass="LocationViewController" customModule="Liftoff" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" tag="2" contentMode="scaleToFill" id="J5x-7M-m4S" userLabel="Location View" customClass="OvalView" customModule="Liftoff" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="327" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="327" height="299.5"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ksg-f7-LhI">
-                                <rect key="frame" x="0.0" y="0.0" width="327" height="300"/>
+                                <rect key="frame" x="0.0" y="0.0" width="327" height="299.5"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

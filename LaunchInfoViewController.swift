@@ -25,9 +25,18 @@ class LaunchInfoViewController: UIViewController, SegmentedDataSource {
         return dateFormatter
     }()
     
+    let intervalFormatter = { () -> DateComponentsFormatter in
+        let intervalFormatter = DateComponentsFormatter()
+        intervalFormatter.allowedUnits = [.hour, .minute]
+        intervalFormatter.unitsStyle = .positional
+        intervalFormatter.zeroFormattingBehavior = .pad
+        return intervalFormatter
+    }()
+    
     //////@IBOutlet weak var missionLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var rocketLabel: UILabel!
+    @IBOutlet weak var timeRemainingLabel: UILabel!
     //////@IBOutlet weak var windowLabel: UILabel!
     
     @IBOutlet var segmentedViews: [UIView]!
@@ -84,6 +93,7 @@ class LaunchInfoViewController: UIViewController, SegmentedDataSource {
         missionDescription = launchItem.missions?.first?.description
         missionType = launchItem.missions?.first?.typeName
         locationLabel.text = launchItem.location?.pads?.first?.name
+        timeRemainingLabel.text = "T- " + (intervalFormatter.string(from: launchItem.date.timeIntervalSinceNow) ?? "Error")
         
         rocketLabel.text = launchItem.rocket?.name
         
