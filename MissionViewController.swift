@@ -12,6 +12,7 @@ class MissionViewController: SegmentedViewController {
     
     @IBOutlet weak var missionPurposeLabel: UILabel!
     @IBOutlet weak var missionDescriptionLabel: UILabel!
+    @IBOutlet weak var blurView: UIView!
     
     override func viewWillAppear(_ animated: Bool) {
         

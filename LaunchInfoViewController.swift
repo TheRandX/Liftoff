@@ -13,7 +13,7 @@ import EventKit
 import MapKit
 import MarqueeLabel
 
-class LaunchInfoViewController: UIViewController, SegmentedDataSource {
+class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningDelegate, SegmentedDataSource, SegmentedDelegate {
     
     var launchItem: Launch!
     private let eventStore = EKEventStore()
@@ -51,6 +51,12 @@ class LaunchInfoViewController: UIViewController, SegmentedDataSource {
     private var rocketImage: UIImage? { didSet{ updateSegmentedViews() }}
     
     private let sentenceCap: Int = 3
+    private var activeView: Int = 0
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        runTimer()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,11 +90,6 @@ class LaunchInfoViewController: UIViewController, SegmentedDataSource {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        runTimer()
-    }
-    
     private func launchItemSet() {
         
         // Sort the outlet collection by tag order
@@ -98,15 +99,15 @@ class LaunchInfoViewController: UIViewController, SegmentedDataSource {
         //////missionLabel.text = launchItem.missionName
         missionDescription = launchItem.missions?.first?.description
         missionType = launchItem.missions?.first?.typeName
-        locationLabel.text = launchItem.location?.pads?.first?.name
         
         // Run the timer that initialises and updates the countdown view
         runTimer()
         
-        // Run the scroll animation for the location label
-        locationLabel.animationCurve = .easeInOut
+        // Set up the scrolling location label
+        locationLabel.animationCurve = .linear
         locationLabel.type = .continuous
-        locationLabel.triggerScrollStart()
+        locationLabel.speed = .rate(40)
+        locationLabel.text = launchItem.location?.pads?.first?.name
         
         //timeRemainingLabel.text = "T- " + (intervalFormatter.string(from: launchItem.date.timeIntervalSinceNow) ?? "Error")
         
@@ -158,12 +159,44 @@ class LaunchInfoViewController: UIViewController, SegmentedDataSource {
         animateViewSwitch(withDuration: 0.5, showView: sender.selectedSegmentIndex)
     }
     
+    @IBAction func tapRecognized(_ sender: UITapGestureRecognizer) {
+        if segmentedViews[activeView].bounds.contains(sender.location(in: segmentedViews[activeView])) {
+            var segue = "presentMission"
+            switch activeView {
+            case 0:
+                break
+            case 1:
+                segue = "presentRocket"
+            case 2:
+                segue = "presentLocation"
+            default:
+                return
+            }
+            performSegue(withIdentifier: segue, sender: nil)
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let identifier = segue.identifier {
             switch identifier {
-            case "embedSegmented":
+            case "embedSegmented", "presentMission", "presentRocket", "presentLocation":
                 if let destinationVC = segue.destination as? SegmentedViewController {
                     destinationVC.dataSource = self
+                    destinationVC.delegate = self
+                }
+                switch identifier {
+                case "presentMission", "presentRocket", "presentLocation":
+                    let vc = segue.destination
+                    
+                    // Retrieve the content view (tag set in IB to 2555)
+                    if let contentView = vc.view.viewWithTag(255) {
+                        if let vc = vc as? SegmentedViewController {
+                            vc.blurViewHeight.constant = 200
+                            vc.tapRecognizer.isEnabled = true
+                        }
+                    }
+                default:
+                    return
                 }
             default:
                 return
@@ -180,7 +213,6 @@ class LaunchInfoViewController: UIViewController, SegmentedDataSource {
     }
     
     private func animateViewSwitch(withDuration duration: TimeInterval, showView: Int) {
-        
         UIView.animate(withDuration: duration, animations: {
             for i in 0..<self.segmentedViews.count {
                 if (showView == i) {
@@ -190,6 +222,16 @@ class LaunchInfoViewController: UIViewController, SegmentedDataSource {
                 }
             }
         })
+        
+        for i in 0..<segmentedViews.count {
+            if (showView == i) {
+                segmentedViews[i].isHidden = false
+            } else {
+                segmentedViews[i].isHidden = true
+            }
+        }
+        
+        activeView = showView
     }
     
     private func rocketImage(fromURL URL: URL, completion: @escaping (Image) -> Void){
@@ -216,6 +258,16 @@ class LaunchInfoViewController: UIViewController, SegmentedDataSource {
                 strongSelf.countdownView.seconds.text = String(second)
             }
         }
+    }
+    
+    // MARK: Transitioning controller delegate methods
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return VariableVerticalPresentationController(presentedViewController: presented, presenting: presentingViewController)
+    }
+    
+    // MARK: Segmented delegate methods
+    func readyToDismiss() {
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK: Data source methods
