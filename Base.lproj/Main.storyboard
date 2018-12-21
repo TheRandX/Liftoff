@@ -26,19 +26,19 @@
                                 <rect key="frame" x="24" y="84" width="327" height="608"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="51" translatesAutoresizingMaskIntoConstraints="NO" id="oHh-iV-Bjt" userLabel="Header Stack View">
-                                        <rect key="frame" x="0.0" y="0.0" width="327" height="223.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="327" height="215"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Xch-ZV-E4X" userLabel="Top Bar Stack View">
-                                                <rect key="frame" x="0.0" y="0.0" width="327" height="58.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="327" height="38.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rocket " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XXf-rr-DZ7">
-                                                        <rect key="frame" x="0.0" y="0.0" width="96" height="58.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="96" height="38.5"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eef-TD-C4x">
-                                                        <rect key="frame" x="273" y="0.0" width="54" height="58.5"/>
+                                                        <rect key="frame" x="273" y="0.0" width="54" height="38.5"/>
                                                         <state key="normal" title="Button"/>
                                                         <connections>
                                                             <action selector="notificationClicked:" destination="WlD-6J-nWj" eventType="touchUpInside" id="FNa-EQ-sDI"/>
@@ -47,7 +47,7 @@
                                                 </subviews>
                                             </stackView>
                                             <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Z19-qc-6FH" userLabel="Info View" customClass="OvalView" customModule="Liftoff" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="109.5" width="327" height="114"/>
+                                                <rect key="frame" x="0.0" y="89.5" width="327" height="125.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Zsl-f5-MrA" userLabel="Info View Stack View">
                                                         <rect key="frame" x="0.0" y="8" width="327" height="117"/>
@@ -105,7 +105,7 @@
                                         </constraints>
                                     </stackView>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="FjM-1g-os0">
-                                        <rect key="frame" x="10" y="256.5" width="307" height="46.5"/>
+                                        <rect key="frame" x="10" y="248" width="307" height="31"/>
                                         <segments>
                                             <segment title="Mission"/>
                                             <segment title="Rocket"/>
@@ -117,22 +117,22 @@
                                         </connections>
                                     </segmentedControl>
                                     <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="Nbs-tJ-PE9" userLabel="Segmented Info View">
-                                        <rect key="frame" x="0.0" y="335" width="327" height="273"/>
+                                        <rect key="frame" x="0.0" y="311" width="327" height="297"/>
                                         <subviews>
                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pk4-Vd-kSQ" userLabel="Mission Container">
-                                                <rect key="frame" x="0.0" y="0.0" width="327" height="273"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="327" height="297"/>
                                                 <connections>
                                                     <segue destination="9gf-wu-8vH" kind="embed" identifier="embedSegmented" id="ykn-nm-pJx"/>
                                                 </connections>
                                             </containerView>
                                             <containerView opaque="NO" alpha="0.0" tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I1W-P8-aTI" userLabel="Rocket Container">
-                                                <rect key="frame" x="0.0" y="0.0" width="327" height="273"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="327" height="297"/>
                                                 <connections>
                                                     <segue destination="XAh-QA-MPv" kind="embed" identifier="embedSegmented" id="ZF1-Jl-moV"/>
                                                 </connections>
                                             </containerView>
                                             <containerView opaque="NO" alpha="0.0" tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Huk-1Y-Rcy" userLabel="Location View">
-                                                <rect key="frame" x="0.0" y="0.0" width="327" height="273"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="327" height="297"/>
                                                 <connections>
                                                     <segue destination="3cK-Re-JkF" kind="embed" identifier="embedSegmented" id="sRV-bF-E2w"/>
                                                 </connections>
@@ -181,6 +181,7 @@
                     <connections>
                         <outlet property="countdownView" destination="zFr-mg-B64" id="vJz-23-g5d"/>
                         <outlet property="locationLabel" destination="OA4-La-n8H" id="3Wo-Ib-eXo"/>
+                        <outlet property="notificationButton" destination="Eef-TD-C4x" id="CAd-Li-ubQ"/>
                         <outlet property="rocketLabel" destination="XXf-rr-DZ7" id="cNX-uf-Mee"/>
                         <outletCollection property="segmentedViews" destination="Pk4-Vd-kSQ" collectionClass="NSMutableArray" id="NBZ-av-IQd"/>
                         <outletCollection property="segmentedViews" destination="I1W-P8-aTI" collectionClass="NSMutableArray" id="bGg-lN-OsZ"/>

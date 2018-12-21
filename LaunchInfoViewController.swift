@@ -35,11 +35,10 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
         return intervalFormatter
     }()
     
-    //////@IBOutlet weak var missionLabel: UILabel!
     @IBOutlet weak var locationLabel: MarqueeLabel!
     @IBOutlet weak var rocketLabel: UILabel!
     @IBOutlet weak var countdownView: TimeCellView!
-    //////@IBOutlet weak var windowLabel: UILabel!
+    @IBOutlet weak var notificationButton: UIButton!
     
     @IBOutlet var segmentedViews: [UIView]!
     
@@ -50,9 +49,21 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
     private var rocketInfo: String? { didSet{ updateSegmentedViews() }}
     private var rocketImage: UIImage? { didSet{ updateSegmentedViews() }}
     
-    private let sentenceCap: Int = 3
-    private var activeView: Int = 0
     
+    // MARK: Constants
+    private let notificationIconName = "notification_bell"
+    private let triggeredNotificationIconName = "notification_bell_triggered"
+    private let labelScrollRate: CGFloat = 40
+    private let sentenceCap: Int = 3
+    private let buttonImageWidth: CGFloat = 30
+    
+    // MARK: Primitive variables
+    private var activeView: Int = 0
+    private var notificationSet = false
+    private var launchEventIdentifier: String!
+    
+    
+    // MARK: Life-cycle methods
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         runTimer()
@@ -81,7 +92,6 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
         }
         
         
-        
         // Do any additional setup after loading the view.
         launchItemSet()
         updateSegmentedViews()
@@ -92,68 +102,72 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
         // Dispose of any resources that can be recreated.
     }
     
-    private func launchItemSet() {
-        
-        // Sort the outlet collection by tag order
-        segmentedViews.sort(by: { $0.tag < $1.tag })
-        
-        title = launchItem.rocketName
-        //////missionLabel.text = launchItem.missionName
-        missionDescription = launchItem.missions?.first?.description
-        missionType = launchItem.missions?.first?.typeName
-        
-        // Run the timer that initialises and updates the countdown view
-        runTimer()
-        
-        // Set up the scrolling location label
-        locationLabel.animationCurve = .linear
-        locationLabel.type = .continuous
-        locationLabel.speed = .rate(40)
-        locationLabel.text = launchItem.location?.pads?.first?.name
-        
-        //timeRemainingLabel.text = "T- " + (intervalFormatter.string(from: launchItem.date.timeIntervalSinceNow) ?? "Error")
-        
-        rocketLabel.text = launchItem.rocket?.name
-        
-        var windowText = dateFormatter.string(from: launchItem.windowstart)
-        
-        if launchItem.windowstart != launchItem.windowend {
-            windowText.append(" - \(dateFormatter.string(from: launchItem.windowend))")
-        }
-        
-        //////windowLabel.text = windowText
-        view.setNeedsLayout()
-    }
-    
+    // MARK: IB actions
     @IBAction func notificationClicked(_ sender: UIButton) {
-        eventStore.requestAccess(to: .event) { [weak self] (granted, error) in
-            guard let strongSelf = self else {
-                return
-            }
-            
-            if (granted && error == nil) {
-                debugPrint("Granted")
-                let event = EKEvent(eventStore: strongSelf.eventStore)
-                event.title = strongSelf.launchItem.rocketName + " launch"
-                event.startDate = strongSelf.launchItem.date
-                event.endDate = strongSelf.launchItem.date
-                event.notes = strongSelf.launchItem.missions?.first?.description
-                event.calendar = strongSelf.eventStore.defaultCalendarForNewEvents
-                
-                // This might crash (but shouldnt)
-                let alarm = EKAlarm(relativeOffset: TimeInterval(exactly: -3600)!)
-                event.addAlarm(alarm)
-                do {
-                    try strongSelf.eventStore.save(event, span: .thisEvent)
-                } catch let error {
-                    debugPrint("Failed to save event with error : \(error)")
+        var savedSuccessfuly = false
+        if !notificationSet {
+            eventStore.requestAccess(to: .event) { [weak self] (granted, error) in
+                guard let strongSelf = self else {
+                    return
                 }
                 
-                debugPrint("Saved successfully!")
-            } else {
-                debugPrint("Failed to save event with error : \(String(describing: error)) or access not granted")
+                if (granted && error == nil) {
+                    debugPrint("Granted")
+                    let event = EKEvent(eventStore: strongSelf.eventStore)
+                    event.title = strongSelf.launchItem.rocketName + " launch"
+                    event.startDate = strongSelf.launchItem.date
+                    event.endDate = strongSelf.launchItem.date
+                    event.notes = strongSelf.launchItem.missions?.first?.description
+                    event.calendar = strongSelf.eventStore.defaultCalendarForNewEvents
+                    
+                    // This might crash (but shouldnt)
+                    let alarm = EKAlarm(relativeOffset: TimeInterval(exactly: -3600)!)
+                    event.addAlarm(alarm)
+                    do {
+                        try strongSelf.eventStore.save(event, span: .thisEvent)
+                    } catch let error {
+                        debugPrint("Failed to save event with error : \(error)")
+                    }
+                    
+                    debugPrint("Saved successfully!")
+                    strongSelf.launchEventIdentifier = event.eventIdentifier
+                    savedSuccessfuly = true
+                    strongSelf.notificationSet = true
+                    DispatchQueue.main.async {
+                        strongSelf.updateButton(triggered: true)
+                    }
+                } else {
+                    debugPrint("Failed to save event with error : \(String(describing: error)) or access not granted")
+                    
+                }
+            }
+        } else {
+            // Here is the method to delete the event
+            notificationSet = false
+            eventStore.requestAccess(to: .event) { [weak self] (granted, error) in
+                guard let strongSelf = self else { return }
+                
+                if granted && error == nil {
+                    debugPrint("Granted")
+                    
+                    if let eventToDelete = strongSelf.eventStore.event(withIdentifier: strongSelf.launchEventIdentifier) {
+                        
+                        do {
+                            try strongSelf.eventStore.remove(eventToDelete, span: .thisEvent)
+                        } catch let error {
+                            debugPrint("Failed to delete event with error : \(String(describing: error)) or access not granted.")
+                        }
+                        
+                        DispatchQueue.main.async {
+                            strongSelf.updateButton(triggered: false)
+                        }
+                        
+                    }
+                    
+                }
                 
             }
+            
         }
     }
     
@@ -178,6 +192,7 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
         }
     }
     
+    // MARK: Overriden methods
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let identifier = segue.identifier {
             switch identifier {
@@ -205,6 +220,52 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
                 return
             }
         }
+    }
+    
+    // MARK: Private methods
+    private func launchItemSet() {
+        
+        // Sort the outlet collection by tag order
+        segmentedViews.sort(by: { $0.tag < $1.tag })
+        
+        title = launchItem.rocketName
+        //////missionLabel.text = launchItem.missionName
+        missionDescription = launchItem.missions?.first?.description
+        missionType = launchItem.missions?.first?.typeName
+        
+        // Run the timer that initialises and updates the countdown view
+        runTimer()
+        
+        // Set up the scrolling location label
+        locationLabel.animationCurve = .linear
+        locationLabel.type = .continuous
+        locationLabel.speed = .rate(labelScrollRate)
+        locationLabel.text = launchItem.location?.pads?.first?.name
+        
+        let bellIcon = UIImage(named: notificationIconName)
+        notificationButton.setTitle(nil, for: .normal)
+        notificationButton.setImage(bellIcon?.renderResizedImage(newWidth: buttonImageWidth), for: .normal)
+        
+        
+        rocketLabel.text = launchItem.rocket?.name
+        
+        var windowText = dateFormatter.string(from: launchItem.windowstart)
+        
+        if launchItem.windowstart != launchItem.windowend {
+            windowText.append(" - \(dateFormatter.string(from: launchItem.windowend))")
+        }
+        
+        view.setNeedsLayout()
+    }
+    
+    private func updateButton(triggered: Bool) {
+        var icon: UIImage? = nil
+        if triggered {
+            icon = UIImage(named: triggeredNotificationIconName)
+        } else {
+            icon = UIImage(named: notificationIconName)
+        }
+        notificationButton.setImage(icon?.renderResizedImage(newWidth: buttonImageWidth), for: .normal)
     }
     
     private func updateSegmentedViews() {
@@ -288,5 +349,20 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
         return
     }
     
+}
+
+extension UIImage {
+    func renderResizedImage (newWidth: CGFloat) -> UIImage {
+        let scale = newWidth / self.size.width
+        let newHeight = self.size.height * scale
+        let newSize = CGSize(width: newWidth, height: newHeight)
+        
+        let renderer = UIGraphicsImageRenderer(size: newSize)
+        
+        let image = renderer.image { (context) in
+            self.draw(in: CGRect(origin: CGPoint(x: 0, y: 0), size: newSize))
+        }
+        return image
+    }
 }
 
