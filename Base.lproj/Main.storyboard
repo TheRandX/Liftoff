@@ -26,19 +26,19 @@
                                 <rect key="frame" x="24" y="84" width="327" height="608"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="51" translatesAutoresizingMaskIntoConstraints="NO" id="oHh-iV-Bjt" userLabel="Header Stack View">
-                                        <rect key="frame" x="0.0" y="0.0" width="327" height="214.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="327" height="223.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Xch-ZV-E4X" userLabel="Top Bar Stack View">
-                                                <rect key="frame" x="0.0" y="0.0" width="327" height="36"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="327" height="58.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rocket " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XXf-rr-DZ7">
-                                                        <rect key="frame" x="0.0" y="0.0" width="96" height="36"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="96" height="58.5"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eef-TD-C4x">
-                                                        <rect key="frame" x="281" y="0.0" width="46" height="36"/>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eef-TD-C4x">
+                                                        <rect key="frame" x="273" y="0.0" width="54" height="58.5"/>
                                                         <state key="normal" title="Button"/>
                                                         <connections>
                                                             <action selector="notificationClicked:" destination="WlD-6J-nWj" eventType="touchUpInside" id="FNa-EQ-sDI"/>
@@ -47,7 +47,7 @@
                                                 </subviews>
                                             </stackView>
                                             <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Z19-qc-6FH" userLabel="Info View" customClass="OvalView" customModule="Liftoff" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="87" width="327" height="127.5"/>
+                                                <rect key="frame" x="0.0" y="109.5" width="327" height="114"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Zsl-f5-MrA" userLabel="Info View Stack View">
                                                         <rect key="frame" x="0.0" y="8" width="327" height="117"/>
@@ -105,7 +105,7 @@
                                         </constraints>
                                     </stackView>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="FjM-1g-os0">
-                                        <rect key="frame" x="10" y="247.5" width="307" height="29"/>
+                                        <rect key="frame" x="10" y="256.5" width="307" height="46.5"/>
                                         <segments>
                                             <segment title="Mission"/>
                                             <segment title="Rocket"/>
@@ -117,22 +117,22 @@
                                         </connections>
                                     </segmentedControl>
                                     <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="Nbs-tJ-PE9" userLabel="Segmented Info View">
-                                        <rect key="frame" x="0.0" y="308.5" width="327" height="299.5"/>
+                                        <rect key="frame" x="0.0" y="335" width="327" height="273"/>
                                         <subviews>
                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pk4-Vd-kSQ" userLabel="Mission Container">
-                                                <rect key="frame" x="0.0" y="0.0" width="327" height="299.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="327" height="273"/>
                                                 <connections>
                                                     <segue destination="9gf-wu-8vH" kind="embed" identifier="embedSegmented" id="ykn-nm-pJx"/>
                                                 </connections>
                                             </containerView>
                                             <containerView opaque="NO" alpha="0.0" tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I1W-P8-aTI" userLabel="Rocket Container">
-                                                <rect key="frame" x="0.0" y="0.0" width="327" height="299.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="327" height="273"/>
                                                 <connections>
                                                     <segue destination="XAh-QA-MPv" kind="embed" identifier="embedSegmented" id="ZF1-Jl-moV"/>
                                                 </connections>
                                             </containerView>
                                             <containerView opaque="NO" alpha="0.0" tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Huk-1Y-Rcy" userLabel="Location View">
-                                                <rect key="frame" x="0.0" y="0.0" width="327" height="299.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="327" height="273"/>
                                                 <connections>
                                                     <segue destination="3cK-Re-JkF" kind="embed" identifier="embedSegmented" id="sRV-bF-E2w"/>
                                                 </connections>
@@ -425,7 +425,7 @@
                             <constraint firstAttribute="trailing" secondItem="Huu-ar-tKQ" secondAttribute="trailing" id="750-lL-KmD"/>
                             <constraint firstItem="YGb-Jd-AAu" firstAttribute="bottom" secondItem="EoZ-YU-WwY" secondAttribute="bottom" id="E7B-Kk-xom"/>
                             <constraint firstItem="EoZ-YU-WwY" firstAttribute="leading" secondItem="YGb-Jd-AAu" secondAttribute="leading" id="K19-2v-TrP"/>
-                            <constraint firstItem="EoZ-YU-WwY" firstAttribute="top" secondItem="Huu-ar-tKQ" secondAttribute="top" id="pNE-LK-ky4"/>
+                            <constraint firstItem="EoZ-YU-WwY" firstAttribute="top" secondItem="Huu-ar-tKQ" secondAttribute="bottom" id="pNE-LK-ky4"/>
                             <constraint firstItem="Huu-ar-tKQ" firstAttribute="leading" secondItem="ggd-PG-V0a" secondAttribute="leading" id="vIJ-lQ-pUB"/>
                             <constraint firstItem="Huu-ar-tKQ" firstAttribute="top" secondItem="YGb-Jd-AAu" secondAttribute="top" id="yLf-HE-OXd"/>
                         </constraints>
@@ -457,13 +457,13 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kdt-4L-7kg" userLabel="Location View" customClass="OvalView" customModule="Liftoff" customModuleProvider="target">
-                                <rect key="frame" x="16" y="28" width="343" height="639"/>
+                                <rect key="frame" x="16" y="20" width="343" height="647"/>
                                 <subviews>
                                     <view tag="255" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sxV-Vy-nav" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="639"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="647"/>
                                         <subviews>
                                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ksg-f7-LhI">
-                                                <rect key="frame" x="20" y="20" width="303" height="599"/>
+                                                <rect key="frame" x="20" y="20" width="303" height="607"/>
                                             </mapView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -493,7 +493,7 @@
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="kdt-4L-7kg" secondAttribute="trailing" id="Ims-GD-a7i"/>
                             <constraint firstAttribute="bottomMargin" secondItem="kdt-4L-7kg" secondAttribute="bottom" id="aHV-3q-8zB"/>
-                            <constraint firstItem="kdt-4L-7kg" firstAttribute="top" secondItem="TIB-FS-OEh" secondAttribute="topMargin" id="d44-o7-F7k"/>
+                            <constraint firstItem="kdt-4L-7kg" firstAttribute="top" secondItem="TIB-FS-OEh" secondAttribute="bottom" id="d44-o7-F7k"/>
                             <constraint firstAttribute="trailing" secondItem="TIB-FS-OEh" secondAttribute="trailing" id="fAt-89-3FD"/>
                             <constraint firstItem="TIB-FS-OEh" firstAttribute="top" secondItem="nuy-WR-GTn" secondAttribute="top" id="oeZ-Mf-Wre"/>
                             <constraint firstItem="TIB-FS-OEh" firstAttribute="leading" secondItem="J5x-7M-m4S" secondAttribute="leading" id="q1l-nB-lH9"/>

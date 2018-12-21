@@ -80,6 +80,8 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
             
         }
         
+        
+        
         // Do any additional setup after loading the view.
         launchItemSet()
         updateSegmentedViews()
@@ -188,10 +190,11 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
                 case "presentMission", "presentRocket", "presentLocation":
                     let vc = segue.destination
                     
-                    // Retrieve the content view (tag set in IB to 2555)
-                    if let contentView = vc.view.viewWithTag(255) {
+                    // Retrieve the content view (tag set in IB to 255)
+                    if let _ = vc.view.viewWithTag(255) {
                         if let vc = vc as? SegmentedViewController {
-                            vc.blurViewHeight.constant = 200
+                            vc.view.backgroundColor = UIColor(red:0.33, green:0.33, blue:0.33, alpha:0.33)
+                            vc.blurViewHeight.constant = rocketLabel.bounds.maxY + (navigationController?.navigationBar.bounds.maxY ?? 0) + 30
                             vc.tapRecognizer.isEnabled = true
                         }
                     }

@@ -41,10 +41,6 @@ class SegmentedViewController: UIViewController {
         tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapRecognized(sender: )))
         view.addGestureRecognizer(tapRecognizer)
         tapRecognizer.isEnabled = false
-        
-        longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressRecognized(sender: )))
-        longPressRecognizer.numberOfTouchesRequired = 2
-        view.addGestureRecognizer(longPressRecognizer)
     }
     
     @objc func tapRecognized(sender: UITapGestureRecognizer) {
@@ -54,9 +50,4 @@ class SegmentedViewController: UIViewController {
             tapRecognizer.isEnabled = false
         }
     }
-    
-    @objc func longPressRecognized(sender: UILongPressGestureRecognizer) {
-        delegate?.readyToDismiss()
-    }
-    
 }
