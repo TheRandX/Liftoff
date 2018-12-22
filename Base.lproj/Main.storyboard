@@ -25,20 +25,20 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="Ndz-y2-hlP" userLabel="Root Stack View">
                                 <rect key="frame" x="24" y="84" width="327" height="608"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="51" translatesAutoresizingMaskIntoConstraints="NO" id="oHh-iV-Bjt" userLabel="Header Stack View">
-                                        <rect key="frame" x="0.0" y="0.0" width="327" height="215"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="bottom" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="oHh-iV-Bjt" userLabel="Header Stack View">
+                                        <rect key="frame" x="0.0" y="0.0" width="327" height="219"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Xch-ZV-E4X" userLabel="Top Bar Stack View">
-                                                <rect key="frame" x="0.0" y="0.0" width="327" height="38.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="327" height="36"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rocket " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XXf-rr-DZ7">
-                                                        <rect key="frame" x="0.0" y="0.0" width="96" height="38.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="96" height="36"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eef-TD-C4x">
-                                                        <rect key="frame" x="273" y="0.0" width="54" height="38.5"/>
+                                                        <rect key="frame" x="273" y="0.0" width="54" height="36"/>
                                                         <state key="normal" title="Button"/>
                                                         <connections>
                                                             <action selector="notificationClicked:" destination="WlD-6J-nWj" eventType="touchUpInside" id="FNa-EQ-sDI"/>
@@ -46,8 +46,17 @@
                                                     </button>
                                                 </subviews>
                                             </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e6o-Iq-71q">
+                                                <rect key="frame" x="283" y="51" width="44" height="30"/>
+                                                <state key="normal" title="Watch">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="streamButton:" destination="WlD-6J-nWj" eventType="touchUpInside" id="AN1-BT-ve0"/>
+                                                </connections>
+                                            </button>
                                             <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Z19-qc-6FH" userLabel="Info View" customClass="OvalView" customModule="Liftoff" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="89.5" width="327" height="125.5"/>
+                                                <rect key="frame" x="0.0" y="96" width="327" height="123"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Zsl-f5-MrA" userLabel="Info View Stack View">
                                                         <rect key="frame" x="0.0" y="8" width="327" height="117"/>
@@ -104,8 +113,11 @@
                                             <constraint firstItem="Xch-ZV-E4X" firstAttribute="width" secondItem="oHh-iV-Bjt" secondAttribute="width" id="xXo-1r-MJ1"/>
                                         </constraints>
                                     </stackView>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="FjM-1g-os0">
-                                        <rect key="frame" x="10" y="248" width="307" height="31"/>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="FjM-1g-os0">
+                                        <rect key="frame" x="10" y="252" width="307" height="29"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="28" id="O3a-QX-S5H"/>
+                                        </constraints>
                                         <segments>
                                             <segment title="Mission"/>
                                             <segment title="Rocket"/>
@@ -117,22 +129,22 @@
                                         </connections>
                                     </segmentedControl>
                                     <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="Nbs-tJ-PE9" userLabel="Segmented Info View">
-                                        <rect key="frame" x="0.0" y="311" width="327" height="297"/>
+                                        <rect key="frame" x="0.0" y="313" width="327" height="295"/>
                                         <subviews>
                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pk4-Vd-kSQ" userLabel="Mission Container">
-                                                <rect key="frame" x="0.0" y="0.0" width="327" height="297"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="327" height="295"/>
                                                 <connections>
                                                     <segue destination="9gf-wu-8vH" kind="embed" identifier="embedSegmented" id="ykn-nm-pJx"/>
                                                 </connections>
                                             </containerView>
                                             <containerView opaque="NO" alpha="0.0" tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I1W-P8-aTI" userLabel="Rocket Container">
-                                                <rect key="frame" x="0.0" y="0.0" width="327" height="297"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="327" height="295"/>
                                                 <connections>
                                                     <segue destination="XAh-QA-MPv" kind="embed" identifier="embedSegmented" id="ZF1-Jl-moV"/>
                                                 </connections>
                                             </containerView>
-                                            <containerView opaque="NO" alpha="0.0" tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Huk-1Y-Rcy" userLabel="Location View">
-                                                <rect key="frame" x="0.0" y="0.0" width="327" height="297"/>
+                                            <containerView opaque="NO" alpha="0.0" tag="2" contentMode="scaleToFill" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="Huk-1Y-Rcy" userLabel="Location View">
+                                                <rect key="frame" x="0.0" y="0.0" width="327" height="295"/>
                                                 <connections>
                                                     <segue destination="3cK-Re-JkF" kind="embed" identifier="embedSegmented" id="sRV-bF-E2w"/>
                                                 </connections>

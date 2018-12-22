@@ -169,6 +169,33 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
         }
     }
     
+    // TODO: Add a URL check, so that if there are no valid URLs, the watch button is not displayed
+    @IBAction func streamButton(_ sender: Any) {
+        
+        guard let url = launchItem.vidURLs?.first else { return }
+        
+        var stringURL = url.absoluteString
+        let start = stringURL.startIndex
+        let end = stringURL.index(start, offsetBy: 4)
+        
+        // This section replaces http with youtube in the url, so that if the user has youtube installed, the link opens there directly
+        if stringURL.hasPrefix("https") {
+            stringURL.replaceSubrange(start...end, with: "youtube")
+        } else if stringURL.hasPrefix("http") {
+            // Includes one character less (replaces http instead of https)
+            stringURL.replaceSubrange(start..<end, with: "youtube")
+        }
+        // This is the url which opens youtube directly
+        let appURL = URL(fileURLWithPath: stringURL)
+        let app = UIApplication.shared
+        // If we can not open the url in youtube, open the normal one in safari
+        if app.canOpenURL(appURL) {
+            app.open(appURL, options: [:], completionHandler: nil)
+        } else {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    
     @IBAction func switchView(_ sender: UISegmentedControl) {
         animateViewSwitch(withDuration: 0.5, showView: sender.selectedSegmentIndex)
     }
@@ -206,6 +233,7 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
                     // Retrieve the content view (tag set in IB to 255)
                     if let _ = vc.view.viewWithTag(255) {
                         if let vc = vc as? SegmentedViewController {
+                            // TODO: Blur the view only after the animation is completed
                             vc.view.backgroundColor = UIColor(red:0.33, green:0.33, blue:0.33, alpha:0.33)
                             vc.blurViewHeight.constant = rocketLabel.bounds.maxY + (navigationController?.navigationBar.bounds.maxY ?? 0) + 30
                             vc.tapRecognizer.isEnabled = true
@@ -309,6 +337,18 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
     }
     
     private func runTimer() {
+        
+        // This section of code is here so that the view does not display zeroes at first, as it takes some time for the timer closure to run
+        var timeRemaining = NSCalendar.current.dateComponents(timeUnits, from: Date(), to: launchItem.date)
+        timeRemaining.timeZone = TimeZone.current
+        if let day = timeRemaining.day, let hour = timeRemaining.hour, let minute = timeRemaining.minute, let second = timeRemaining.second {
+            
+            countdownView.days.text = String(day)
+            countdownView.hours.text = String(hour)
+            countdownView.minutes.text = String(minute)
+            countdownView.seconds.text = String(second)
+        }
+        
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] (timer) in
             
             guard let strongSelf = self else { return }
