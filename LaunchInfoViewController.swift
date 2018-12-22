@@ -74,21 +74,20 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
         
         // Get the rocket image if there is any
         if let imageURL = launchItem.rocket?.imageURL {
-            rocketImage(fromURL: imageURL) { image in
-                self.rocketImage = image
+            rocketImage(fromURL: imageURL) { [weak self] image in
+                guard let strongSelf = self else { return }
+                strongSelf.rocketImage = image
             }
         }
         
         // Get article text form wiki info manager
         WikiInfoManager.getArticleText(articleURL: (launchItem.rocket?.wikiURL)!) { [weak self] articleText in
             
-            if let text = articleText {
-                //var sentences = text.components(separatedBy: ". ")
-                
-                //sentences.removeSubrange((self?.sentenceCap)!..<sentences.count)
-                self?.rocketInfo = text
-            }
+            guard let strongSelf = self, let text = articleText else { return }
             
+            var paragraphs = text.components(separatedBy: "\n")
+            
+            strongSelf.rocketInfo = paragraphs[0]
         }
         
         
@@ -103,8 +102,8 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
     }
     
     // MARK: IB actions
+    // TODO: This method wont work if the user quits the app and then tries to delete the view
     @IBAction func notificationClicked(_ sender: UIButton) {
-        var savedSuccessfuly = false
         if !notificationSet {
             eventStore.requestAccess(to: .event) { [weak self] (granted, error) in
                 guard let strongSelf = self else {
@@ -131,7 +130,6 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
                     
                     debugPrint("Saved successfully!")
                     strongSelf.launchEventIdentifier = event.eventIdentifier
-                    savedSuccessfuly = true
                     strongSelf.notificationSet = true
                     DispatchQueue.main.async {
                         strongSelf.updateButton(triggered: true)
@@ -211,6 +209,10 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
                             vc.view.backgroundColor = UIColor(red:0.33, green:0.33, blue:0.33, alpha:0.33)
                             vc.blurViewHeight.constant = rocketLabel.bounds.maxY + (navigationController?.navigationBar.bounds.maxY ?? 0) + 30
                             vc.tapRecognizer.isEnabled = true
+                            // Show the image view in the expanded state
+                            if let rocketVC = vc as? RocketViewController {
+                                rocketVC.rocketImageView.isHidden = false
+                            }
                         }
                     }
                 default:
@@ -229,8 +231,7 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
         segmentedViews.sort(by: { $0.tag < $1.tag })
         
         title = launchItem.rocketName
-        //////missionLabel.text = launchItem.missionName
-        missionDescription = launchItem.missions?.first?.description
+        missionDescription = launchItem.missions?.first?.description.components(separatedBy: "\n")[0]
         missionType = launchItem.missions?.first?.typeName
         
         // Run the timer that initialises and updates the countdown view
@@ -346,7 +347,14 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
     }
     
     func locationData(locationView: MKMapView!) {
-        return
+        // Maybe give an error code if pad doesnt exist
+        guard let pad = launchItem.location?.pads?.first else { return }
+        let coordinates = CLLocationCoordinate2DMake(pad.latitude, pad.longitude)
+        locationView.setCenter(coordinates, animated: false)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = CLLocationCoordinate2DMake(pad.latitude, pad.longitude)
+        annotation.title = pad.name
+        locationView.addAnnotation(annotation)
     }
     
 }

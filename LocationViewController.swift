@@ -15,10 +15,12 @@ class LocationViewController: SegmentedViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        if let vc = super.superclass as? UIViewController {
-            vc.viewWillAppear(animated)
+        if let vc = super.superclass as? UIViewController? {
+            vc?.viewWillAppear(animated)
         }
-        
+        locationMap.isScrollEnabled = false
+        locationMap.layer.masksToBounds = true
+        locationMap.layer.cornerRadius = 0.1 * min(locationMap.bounds.width, locationMap.bounds.height)
         dataSource?.locationData(locationView: locationMap)
         
     }

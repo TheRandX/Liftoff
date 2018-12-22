@@ -301,7 +301,7 @@
                                     <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0ec-kT-bYJ" userLabel="Content View">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="647"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mission Description" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ouD-iS-j5x">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mission Description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ouD-iS-j5x">
                                                 <rect key="frame" x="20" y="80.5" width="303" height="20.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -319,6 +319,7 @@
                                             <constraint firstItem="OWn-ch-h1o" firstAttribute="top" secondItem="0ec-kT-bYJ" secondAttribute="top" constant="30" id="39R-WB-V7d"/>
                                             <constraint firstItem="ouD-iS-j5x" firstAttribute="top" secondItem="OWn-ch-h1o" secondAttribute="bottom" constant="30" id="DwZ-qa-YBq"/>
                                             <constraint firstItem="OWn-ch-h1o" firstAttribute="centerX" secondItem="0ec-kT-bYJ" secondAttribute="centerX" id="IiS-7I-fPn"/>
+                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ouD-iS-j5x" secondAttribute="bottom" id="OG3-zY-ua0"/>
                                             <constraint firstItem="ouD-iS-j5x" firstAttribute="width" secondItem="0ec-kT-bYJ" secondAttribute="width" constant="-40" id="Wwf-xb-EYG"/>
                                             <constraint firstItem="OWn-ch-h1o" firstAttribute="width" secondItem="0ec-kT-bYJ" secondAttribute="width" constant="-40" id="fhl-NB-Cxi"/>
                                             <constraint firstItem="ouD-iS-j5x" firstAttribute="centerX" secondItem="0ec-kT-bYJ" secondAttribute="centerX" id="jsu-ou-i8Z"/>
@@ -389,7 +390,7 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="L23-Hb-8bb">
+                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="L23-Hb-8bb">
                                                 <rect key="frame" x="20" y="60.5" width="335" height="566.5"/>
                                             </imageView>
                                         </subviews>

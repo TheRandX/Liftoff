@@ -16,8 +16,8 @@ class MissionViewController: SegmentedViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        if let vc = super.superclass as? UIViewController {
-            vc.viewWillAppear(animated)
+        if let vc = super.superclass as? UIViewController? {
+            vc?.viewWillAppear(animated)
         }
         
         dataSource?.missionData(missionType: missionPurposeLabel, missionDescription: missionDescriptionLabel)
