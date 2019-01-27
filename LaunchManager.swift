@@ -20,9 +20,7 @@ class LaunchManager {
         var launches: [Launch]?
         
         // Construct the url from the options dictionary
-        var url = LaunchManager.baseURL
-        url.append("&")
-        url.append("mode=\(mode)")
+        var url = LaunchManager.baseURL + "&mode=\(mode)"
         if let options = options, !options.isEmpty {
             for (parameter, value) in options {
                 url.append("\(parameter)=\(value)")
@@ -36,7 +34,7 @@ class LaunchManager {
                 launches = [Launch]()
                 
                 let json = JSON(data)
-                // TODO: Add type request selection here
+                
                 for launch in json["launches"].arrayValue {
                     
                     let launchDict = launch.dictionaryValue
@@ -49,9 +47,6 @@ class LaunchManager {
             }
         }
     }
-    
-    
-    
     
     // MARK: Retriever functions
     // Retrieves and completes the launch object

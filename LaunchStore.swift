@@ -28,7 +28,6 @@ class LaunchStore {
             } else {
                 return false
             }
-            
         }
     }
     

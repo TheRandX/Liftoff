@@ -8,8 +8,6 @@
 
 import Foundation
 
-
-
 struct Agency {
     
     let id: Int

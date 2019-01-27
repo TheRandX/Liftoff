@@ -71,6 +71,4 @@ enum LaunchResponseParams: String {
     case MissionType = "missionType"
     case Pad = "pad"
     case Agencies = "agencies"
-    
-    // This might be the most retarded way i've spent my time
 }

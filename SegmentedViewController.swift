@@ -12,8 +12,8 @@ class SegmentedViewController: UIViewController {
 
     @IBOutlet weak var blurViewHeight: NSLayoutConstraint!
     
-    var dataSource: SegmentedDataSource?
-    var delegate: SegmentedDelegate?
+    weak var dataSource: SegmentedDataSource?
+    weak var delegate: SegmentedDelegate?
     
     var tapRecognizer: UITapGestureRecognizer!
     

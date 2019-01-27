@@ -18,7 +18,7 @@ class WikiInfoManager {
         
         let stringURL = articleURL.absoluteString
         if let articleName = stringURL.components(separatedBy: "/").last {
-            
+            debugPrint(baseLink + articleName)
             Alamofire.request(baseLink + articleName).responseData() { response in
                 if let data = response.result.value {
                     
@@ -26,13 +26,9 @@ class WikiInfoManager {
                     
                     let page = json.dictionaryValue["query"]!["pages"]
                     if page.count == 1 {
-                        
                         for (_, value) in page.dictionaryValue {
-                            let d = value.dictionaryValue["extract"]!.rawString()
                             completion(value.dictionaryValue["extract"]!.stringValue)
-                            
                         }
-                        
                     }
                 }
             }

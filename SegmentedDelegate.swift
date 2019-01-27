@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol SegmentedDelegate {
+protocol SegmentedDelegate: class {
     func readyToDismiss() 
 }

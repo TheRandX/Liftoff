@@ -10,12 +10,12 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
+
 class LaunchTableViewController: UITableViewController {
     
-    let store = LaunchStore()
-    var selectedLaunch: Launch?
-    static let launchManager = LaunchManager()
-    let dateFormatter = { () -> DateFormatter in
+    private let store: LaunchStore = LaunchStore()
+    private var selectedLaunch: Launch?
+    private let dateFormatter = { () -> DateFormatter in
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM d"
         return dateFormatter
@@ -25,11 +25,10 @@ class LaunchTableViewController: UITableViewController {
         super.viewDidLoad()
         
         LaunchManager.getLaunches(mode: "verbose", options: nil) { [weak self] optLaunches in
-            if let launches = optLaunches {
-                self?.store.items = launches
-                self?.store.sortItems()
-                self?.tableView.reloadData()
-            }
+            guard let strongSelf = self, let launches = optLaunches else { return }
+            strongSelf.store.items = launches
+            strongSelf.store.sortItems()
+            strongSelf.tableView.reloadData()
         }
         
         // Get the height of the status bar
@@ -59,14 +58,12 @@ class LaunchTableViewController: UITableViewController {
         
         // Set the date
         cell.date.text = dateFormatter.string(from: item.date)
-        //cell.missionName.text = item.missionName
         cell.rocketName.text = item.rocketName
         
         return cell
         
     }
     
-    // TODO: When a row is selected, activate the "launchInfo" segue to LaunchInfoViewController
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedLaunch = store.items[indexPath.row]
         performSegue(withIdentifier: "launchInfo", sender: self)

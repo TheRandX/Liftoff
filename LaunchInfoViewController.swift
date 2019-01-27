@@ -13,7 +13,7 @@ import EventKit
 import MapKit
 import MarqueeLabel
 
-class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningDelegate, SegmentedDataSource, SegmentedDelegate {
+class LaunchInfoViewController: UIViewController, SegmentedDataSource, SegmentedDelegate {
     
     var launchItem: Launch!
     private let eventStore = EKEventStore()
@@ -36,9 +36,10 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
     }()
     
     @IBOutlet weak var locationLabel: MarqueeLabel!
-    @IBOutlet weak var rocketLabel: UILabel!
+    @IBOutlet weak var rocketLabel: MarqueeLabel!
     @IBOutlet weak var countdownView: TimeCellView!
     @IBOutlet weak var notificationButton: UIButton!
+    @IBOutlet weak var streamButton: UIButton!
     
     @IBOutlet var segmentedViews: [UIView]!
     
@@ -53,9 +54,10 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
     // MARK: Constants
     private let notificationIconName = "notification_bell"
     private let triggeredNotificationIconName = "notification_bell_triggered"
+    private let streamIconName = "stream_icon"
     private let labelScrollRate: CGFloat = 40
     private let sentenceCap: Int = 3
-    private let buttonImageWidth: CGFloat = 30
+    private let buttonImageHeight: CGFloat = 30
     
     // MARK: Primitive variables
     private var activeView: Int = 0
@@ -79,18 +81,19 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
                 strongSelf.rocketImage = image
             }
         }
-        
         // Get article text form wiki info manager
         WikiInfoManager.getArticleText(articleURL: (launchItem.rocket?.wikiURL)!) { [weak self] articleText in
-            
             guard let strongSelf = self, let text = articleText else { return }
             
             var paragraphs = text.components(separatedBy: "\n")
             
-            strongSelf.rocketInfo = paragraphs[0]
+            let sentences = strongSelf.splitSentences(text: paragraphs[0])
+            var truncatedText = String()
+            for i in 0..<min(strongSelf.sentenceCap, sentences.count) {
+                truncatedText += sentences[i] + " "
+            }
+            strongSelf.rocketInfo = truncatedText.trimmingCharacters(in: CharacterSet.whitespaces)
         }
-        
-        
         // Do any additional setup after loading the view.
         launchItemSet()
         updateSegmentedViews()
@@ -105,71 +108,14 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
     // TODO: This method wont work if the user quits the app and then tries to delete the view
     @IBAction func notificationClicked(_ sender: UIButton) {
         if !notificationSet {
-            eventStore.requestAccess(to: .event) { [weak self] (granted, error) in
-                guard let strongSelf = self else {
-                    return
-                }
-                
-                if (granted && error == nil) {
-                    debugPrint("Granted")
-                    let event = EKEvent(eventStore: strongSelf.eventStore)
-                    event.title = strongSelf.launchItem.rocketName + " launch"
-                    event.startDate = strongSelf.launchItem.date
-                    event.endDate = strongSelf.launchItem.date
-                    event.notes = strongSelf.launchItem.missions?.first?.description
-                    event.calendar = strongSelf.eventStore.defaultCalendarForNewEvents
-                    
-                    // This might crash (but shouldnt)
-                    let alarm = EKAlarm(relativeOffset: TimeInterval(exactly: -3600)!)
-                    event.addAlarm(alarm)
-                    do {
-                        try strongSelf.eventStore.save(event, span: .thisEvent)
-                    } catch let error {
-                        debugPrint("Failed to save event with error : \(error)")
-                    }
-                    
-                    debugPrint("Saved successfully!")
-                    strongSelf.launchEventIdentifier = event.eventIdentifier
-                    strongSelf.notificationSet = true
-                    DispatchQueue.main.async {
-                        strongSelf.updateButton(triggered: true)
-                    }
-                } else {
-                    debugPrint("Failed to save event with error : \(String(describing: error)) or access not granted")
-                    
-                }
-            }
+            addEvent()
         } else {
             // Here is the method to delete the event
+            deleteEvent()
             notificationSet = false
-            eventStore.requestAccess(to: .event) { [weak self] (granted, error) in
-                guard let strongSelf = self else { return }
-                
-                if granted && error == nil {
-                    debugPrint("Granted")
-                    
-                    if let eventToDelete = strongSelf.eventStore.event(withIdentifier: strongSelf.launchEventIdentifier) {
-                        
-                        do {
-                            try strongSelf.eventStore.remove(eventToDelete, span: .thisEvent)
-                        } catch let error {
-                            debugPrint("Failed to delete event with error : \(String(describing: error)) or access not granted.")
-                        }
-                        
-                        DispatchQueue.main.async {
-                            strongSelf.updateButton(triggered: false)
-                        }
-                        
-                    }
-                    
-                }
-                
-            }
-            
         }
     }
     
-    // TODO: Add a URL check, so that if there are no valid URLs, the watch button is not displayed
     @IBAction func streamButton(_ sender: Any) {
         
         guard let url = launchItem.vidURLs?.first else { return }
@@ -202,10 +148,10 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
     
     @IBAction func tapRecognized(_ sender: UITapGestureRecognizer) {
         if segmentedViews[activeView].bounds.contains(sender.location(in: segmentedViews[activeView])) {
-            var segue = "presentMission"
+            var segue = ""
             switch activeView {
             case 0:
-                break
+                segue = "presentMission"
             case 1:
                 segue = "presentRocket"
             case 2:
@@ -234,6 +180,7 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
                     if let _ = vc.view.viewWithTag(255) {
                         if let vc = vc as? SegmentedViewController {
                             // TODO: Blur the view only after the animation is completed
+                            
                             vc.view.backgroundColor = UIColor(red:0.33, green:0.33, blue:0.33, alpha:0.33)
                             vc.blurViewHeight.constant = rocketLabel.bounds.maxY + (navigationController?.navigationBar.bounds.maxY ?? 0) + 30
                             vc.tapRecognizer.isEnabled = true
@@ -265,18 +212,28 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
         // Run the timer that initialises and updates the countdown view
         runTimer()
         
-        // Set up the scrolling location label
+        // Set up the scrolling location and rocket label
         locationLabel.animationCurve = .linear
         locationLabel.type = .continuous
         locationLabel.speed = .rate(labelScrollRate)
         locationLabel.text = launchItem.location?.pads?.first?.name
         
+        rocketLabel.animationCurve = .linear
+        rocketLabel.type = .continuous
+        rocketLabel.speed = .rate(labelScrollRate)
+        rocketLabel.text = launchItem.rocket?.name
+        
         let bellIcon = UIImage(named: notificationIconName)
         notificationButton.setTitle(nil, for: .normal)
-        notificationButton.setImage(bellIcon?.renderResizedImage(newWidth: buttonImageWidth), for: .normal)
+        notificationButton.setImage(bellIcon?.renderResizedImage(newHeight: buttonImageHeight), for: .normal)
         
-        
-        rocketLabel.text = launchItem.rocket?.name
+        if !(launchItem?.vidURLs?.isEmpty ?? true) {
+            let streamIcon = UIImage(named: streamIconName)
+            streamButton.setTitle(nil, for: .normal)
+            streamButton.setImage(streamIcon?.renderResizedImage(newHeight: buttonImageHeight), for: .normal)
+        } else {
+            streamButton.isHidden = true
+        }
         
         var windowText = dateFormatter.string(from: launchItem.windowstart)
         
@@ -286,6 +243,86 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
         
         view.setNeedsLayout()
     }
+   
+    private func splitSentences(text: String) -> [String] {
+        var range = [Range<String.Index>]()
+        let tags = text.linguisticTags(
+            in: text.startIndex..<text.endIndex,
+            scheme: NSLinguisticTagScheme.lexicalClass.rawValue,
+            tokenRanges: &range)
+        var result = [String]()
+        
+        let punctutationIndexes = tags.enumerated().filter {
+            $0.1 == "SentenceTerminator"
+            }.map { range[$0.0].lowerBound }
+        
+        var prev = text.startIndex
+        
+        for index in punctutationIndexes {
+            let range = prev...index
+            result.append(text[range].trimmingCharacters(in: CharacterSet.whitespaces))
+            prev = text.index(after: index)
+        }
+        return result
+    }
+    
+    private func addEvent() {
+        eventStore.requestAccess(to: .event) { [weak self] (granted, error) in
+            guard let strongSelf = self else { return }
+            
+            if (granted && error == nil) {
+                debugPrint("Granted")
+                let event = EKEvent(eventStore: strongSelf.eventStore)
+                event.title = strongSelf.launchItem.rocketName + " launch"
+                event.startDate = strongSelf.launchItem.date
+                event.endDate = strongSelf.launchItem.date
+                event.notes = strongSelf.launchItem.missions?.first?.description
+                event.calendar = strongSelf.eventStore.defaultCalendarForNewEvents
+                
+                // This might crash (but shouldnt)
+                let alarm = EKAlarm(relativeOffset: TimeInterval(exactly: -3600)!)
+                event.addAlarm(alarm)
+                do {
+                    try strongSelf.eventStore.save(event, span: .thisEvent)
+                } catch let error {
+                    debugPrint("Failed to save event with error : \(error)")
+                }
+                
+                debugPrint("Saved successfully!")
+                strongSelf.launchEventIdentifier = event.eventIdentifier
+                DispatchQueue.main.async {
+                    strongSelf.updateButton(triggered: true)
+                }
+                strongSelf.notificationSet = true
+            } else {
+                debugPrint("Failed to save event with error : \(String(describing: error)) or access not granted")
+                let alert = UIAlertController(title: "Failed to save event.", message: "Please turn on calendar permissions for Liftoff. You can do this in Settings -> Liftoff -> Calendars.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                strongSelf.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    private func deleteEvent() {
+        eventStore.requestAccess(to: .event) { [weak self] (granted, error) in
+            guard let strongSelf = self else { return }
+            
+            if granted && error == nil {
+                debugPrint("Granted")
+                if let eventToDelete = strongSelf.eventStore.event(withIdentifier: strongSelf.launchEventIdentifier) {
+                    do {
+                        try strongSelf.eventStore.remove(eventToDelete, span: .thisEvent)
+                    } catch let error {
+                        debugPrint("Failed to delete event with error : \(String(describing: error)) or access not granted.")
+                    }
+                    DispatchQueue.main.async {
+                        strongSelf.updateButton(triggered: false)
+                    }
+                }
+            }
+        }
+    }
+    
     
     private func updateButton(triggered: Bool) {
         var icon: UIImage? = nil
@@ -294,7 +331,7 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
         } else {
             icon = UIImage(named: notificationIconName)
         }
-        notificationButton.setImage(icon?.renderResizedImage(newWidth: buttonImageWidth), for: .normal)
+        notificationButton.setImage(icon?.renderResizedImage(newHeight: buttonImageHeight), for: .normal)
     }
     
     private func updateSegmentedViews() {
@@ -306,12 +343,13 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
     }
     
     private func animateViewSwitch(withDuration duration: TimeInterval, showView: Int) {
-        UIView.animate(withDuration: duration, animations: {
-            for i in 0..<self.segmentedViews.count {
+        UIView.animate(withDuration: duration, animations: { [weak self] in
+            guard let strongSelf = self else { return }
+            for i in 0..<strongSelf.segmentedViews.count {
                 if (showView == i) {
-                    self.segmentedViews[i].alpha = 1
+                    strongSelf.segmentedViews[i].alpha = 1
                 } else {
-                    self.segmentedViews[i].alpha = 0
+                    strongSelf.segmentedViews[i].alpha = 0
                 }
             }
         })
@@ -365,11 +403,6 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
         }
     }
     
-    // MARK: Transitioning controller delegate methods
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return VariableVerticalPresentationController(presentedViewController: presented, presenting: presentingViewController)
-    }
-    
     // MARK: Segmented delegate methods
     func readyToDismiss() {
         dismiss(animated: true, completion: nil)
@@ -400,9 +433,9 @@ class LaunchInfoViewController: UIViewController, UIViewControllerTransitioningD
 }
 
 extension UIImage {
-    func renderResizedImage (newWidth: CGFloat) -> UIImage {
-        let scale = newWidth / self.size.width
-        let newHeight = self.size.height * scale
+    func renderResizedImage (newHeight: CGFloat) -> UIImage {
+        let scale = newHeight / self.size.height
+        let newWidth = self.size.width * scale
         let newSize = CGSize(width: newWidth, height: newHeight)
         
         let renderer = UIGraphicsImageRenderer(size: newSize)

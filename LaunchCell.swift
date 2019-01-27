@@ -12,7 +12,6 @@ import UIKit
 class LaunchCell: UITableViewCell {
     
     @IBOutlet weak var rocketName: UILabel!
-    //@IBOutlet weak var missionName: UILabel!
     @IBOutlet weak var date: UILabel!
     
     @IBInspectable var lineWidth: CGFloat = 4
@@ -37,7 +36,6 @@ class LaunchCell: UITableViewCell {
         
         fillColor.setFill()
         path.fill()
-        
     }
     
 }

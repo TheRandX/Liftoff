@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-protocol SegmentedDataSource {
+protocol SegmentedDataSource: class {
     
     func missionData(missionType: UILabel!, missionDescription: UILabel!)
     func rocketData(rocketInfo: UILabel!, rocketImage: UIImageView!)
